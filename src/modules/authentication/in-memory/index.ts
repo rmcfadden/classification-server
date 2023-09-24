@@ -1,4 +1,8 @@
-const authenticate = () => {}
-const addCredential = () => {}
+const InMemoryAuthentication = () =>{
+    const authenticate = () => {}
+    const addCredential = () => {}
+    return {authenticate, addCredential};
+    
+}
 
-export {authenticate, addCredential}
+export InMemoryAuthentication;
