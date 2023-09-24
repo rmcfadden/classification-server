@@ -1,8 +1,9 @@
-import {InMemoryAuthentication from "../authentication/in-memory"
+import {InMemoryAuthentication} from "../authentication/in-memory";
+import {AuthenticationBase} from "../authentication/authenticationBase";
 const AuthenticationFactory = () =>{
-    const authentications = new Map<string, AuthenticationBase>(){
+    const authenticationLookup = new Map<string, AuthenticationBase>(){
         {"in-memory", new InMemoryAuthentication() }
     };
 
-    const create = (name: string) => authentications.get(name);
+    const create: AuthenticationBase = (name: string) => authenticationLookup.get(name);
 }
