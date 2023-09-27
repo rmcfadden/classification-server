@@ -1,4 +1,4 @@
 export interface AuthenticationBase {
-  authenticate: () => void;
-  supports: (header: string) => void;
+  authenticate: (header: string) => Promise<void>;
+  supports: (header: string) => Promise<boolean>;
 }

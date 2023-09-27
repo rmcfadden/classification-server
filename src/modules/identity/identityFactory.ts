@@ -1,3 +1,5 @@
+import {MemoryIdentity} from "./memoryIdentity"
+import {IdentityBase} from "./identityBase"
 export const IdentityFactory = () => {
   const authenticationLookup = new Map<string, IdentityBase>([
     ["memory", MemoryIdentity()],
