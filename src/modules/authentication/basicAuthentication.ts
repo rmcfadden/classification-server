@@ -1,7 +1,6 @@
 import { AuthenticationBase } from "./authenticationBase";
 export const BasicAuthentication = () => {
-  const authenticate = async (header: string): Promise<void> => 
-  {
+  const authenticate = async (header: string): Promise<void> => {
     const encoded: string = header.replace(/^(basic)/i,"").trim();
     const plainText: string = Buffer.from(encoded, 'base64').toString('utf-8');
     const userPassword: string[] = plainText.split(':');
