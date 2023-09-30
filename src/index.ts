@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 
 import { AuthenticationFactory } from "./modules/authentication/authenticationFactory";
 import { AuthenticationBase } from "./modules/authentication/authenticationBase";
+import { DatasetsFactory } from "./modules/dataSets/dataSetsFactory"
+import { DataSet } from "./models/dataSet";
 
 dotenv.config();
 
@@ -24,10 +26,6 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
   if (!authenticator)
     return res.status(400).send("Cannot find an authenticator");
   await authenticator.authenticate(authorization);
-
-
-  console.log('authenticator', authenticator)
-
   next();
 });
 
@@ -36,15 +34,18 @@ const index = (_: Request, res: Response) => {
 };
 app.get("/", index);
 
-const getDataSet = (req: Request, res: Response) => {
-  console.log('HERE!!!!!!!!!!!!!!');
-  res.send(`${productName}`);
+const getDataSet = async (req: Request, res: Response) => {
+  const name = req.params["name"]
+  const dataSetsModule = DatasetsFactory().create("memory");
+  const dataSet = await dataSetsModule.get(name)
+  res.send(dataSet);
 };
-app.get("/datasets", getDataSet);
+app.get("/datasets/name/:name", getDataSet);
 
 const addDataSet = (req: Request, res: Response) => {
-  console.log("BOdY", req.body);
-
+  const dataSet = req.body as DataSet;
+  const dataSetsModule = DatasetsFactory().create("memory");
+  dataSetsModule.add(dataSet);
   res.send(`${productName}`);
 };
 app.post("/datasets", addDataSet);

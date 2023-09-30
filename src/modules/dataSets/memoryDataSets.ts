@@ -6,8 +6,7 @@ export const MemoryDataSets = () => {
     const add = async (dataSet: DataSet) => {
         memoryCache = memoryCache.set(dataSet.name, dataSet);
     };
-    const get: Promise<DataSet | undefined> = async (name: string) =>
+    const get = async (name: string) =>
         memoryCache.get(name);
-
     return { add, get } as DataSetsBase;
 }

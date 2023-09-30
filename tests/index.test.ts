@@ -17,15 +17,25 @@ test("index", async () => {
 });
 
 test("datasets", async () => {
+  const dataSetName = "test123"
   const dataPoints: DataPoint[] = [{ x: 1, y: 2, }, { x: 2, y: 4, }, { x: 4, y: 8 }];
-  const pointsDataSet: DataSet = { name: "test", dataTypes: "datapoint", items: dataPoints }
+  const pointsDataSet: DataSet = { name: dataSetName, dataTypes: "datapoint", items: dataPoints }
 
-  const { status, } = await request(app)
+  const { status: addStatus } = await request(app)
     .post("/datasets/")
     .set('Authorization', token)
     .send(JSON.stringify(pointsDataSet))
     .set('Content-type', 'application/json');
-  expect(status).toBe(200);
+  expect(addStatus).toBe(200);
+
+  const { status: getStatus, body } = await request(app)
+    .get(`/datasets/name/${dataSetName}/`)
+    .set('Authorization', token);
+  expect(getStatus).toBe(200);
+  const { name, dataTypes }: DataSet = body;
+  expect(dataSetName).toBe(name);
+  expect(dataTypes).toBe("datapoint");
+
 });
 
 afterAll(() => server.close());
