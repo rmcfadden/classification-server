@@ -10,22 +10,23 @@ const app: Express = express();
 const port = process.env.PORT || "3000";
 const productName = "Cali's Classification Server V.0001";
 
-// Authorization: Basic ZGVtbzpwQDU1dzByZA==
 // Authentication middle-ware
+app.use(express.json());
+
 app.use(async (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
-  if (!authorization) 
+  if (!authorization)
     return res.status(400).send("Authorization header is required");
   const { create, getKeys } = AuthenticationFactory();
   const keys = getKeys();
   const authenticators = keys.map((k) => create(k));
   const authenticator = authenticators.find(async (a: AuthenticationBase) => await a.supports(authorization));
-  if(!authenticator)
+  if (!authenticator)
     return res.status(400).send("Cannot find an authenticator");
   await authenticator.authenticate(authorization);
 
 
-console.log('authenticator', authenticator)
+  console.log('authenticator', authenticator)
 
   next();
 });
@@ -35,18 +36,24 @@ const index = (_: Request, res: Response) => {
 };
 app.get("/", index);
 
-app.get("/list", (req: Request, res: Response) => {
-  res.send(`${productName}`);
-});
-
-const dataSets = (req: Request, res: Response) => {
+const getDataSet = (req: Request, res: Response) => {
+  console.log('HERE!!!!!!!!!!!!!!');
   res.send(`${productName}`);
 };
-app.get("/datasets", dataSets);
+app.get("/datasets", getDataSet);
+
+const addDataSet = (req: Request, res: Response) => {
+  console.log("BOdY", req.body);
+
+  res.send(`${productName}`);
+};
+app.post("/datasets", addDataSet);
+
+
 
 const server = app.listen(port, () => {
-  console.log(`⚡️⚡️${productName} is running at http://localhost:${port}`);
+  console.log(`⚡️⚡️${productName} is running at http://localhost:${port}`); ``
 });
 
 export default app;
-export { server, index, dataSets };
+export { server, index, getDataSet, addDataSet };

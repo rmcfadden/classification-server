@@ -1,10 +1,13 @@
 import { DataSetsBase } from "./dataSetsBase";
-import {DataSet} from "../../models/dataSet";
+import { DataSet } from "../../models/dataSet";
 
 let memoryCache = new Map<string, DataSet>();
 export const MemoryDataSets = () => {
-    const add = async (dataSet: DataSet) =>
+    const add = async (dataSet: DataSet) => {
         memoryCache = memoryCache.set(dataSet.name, dataSet);
-    const get: DataSet = async (name: string) => memoryCache.get(name);
+    };
+    const get: Promise<DataSet | undefined> = async (name: string) =>
+        memoryCache.get(name);
+
     return { add, get } as DataSetsBase;
 }

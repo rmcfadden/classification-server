@@ -1,6 +1,8 @@
 import app, { server } from "../src/index";
 import request from "supertest";
 import dotenv from "dotenv";
+import { DataPoint } from "../src/models/dataPoint";
+import { DataSet } from "../src/models/dataSet"
 
 dotenv.config();
 
@@ -10,16 +12,20 @@ test("index", async () => {
   const { status, text } = await request(app)
     .get("/")
     .set('Authorization', token);
-    expect(status).toBe(200);
+  expect(status).toBe(200);
   expect(text).toMatch(/^Cali's Classification Server/);
 });
 
 test("datasets", async () => {
-  const { status, text } = await request(app)
+  const dataPoints: DataPoint[] = [{ x: 1, y: 2, }, { x: 2, y: 4, }, { x: 4, y: 8 }];
+  const pointsDataSet: DataSet = { name: "test", dataTypes: "datapoint", items: dataPoints }
+
+  const { status, } = await request(app)
     .post("/datasets/")
-    .set('Authorization', token);
+    .set('Authorization', token)
+    .send(JSON.stringify(pointsDataSet))
+    .set('Content-type', 'application/json');
   expect(status).toBe(200);
-  expect(text).toMatch(/^Cali's Classification Server/);
 });
 
 afterAll(() => server.close());
