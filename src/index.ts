@@ -42,15 +42,20 @@ const getDataSet = async (req: Request, res: Response) => {
 };
 app.get("/datasets/name/:name", getDataSet);
 
-const addDataSet = (req: Request, res: Response) => {
+const addDataSet = async (req: Request, res: Response) => {
   const dataSet = req.body as DataSet;
   const dataSetsModule = DatasetsFactory().create("memory");
-  dataSetsModule.add(dataSet);
-  res.send(`${productName}`);
+  await dataSetsModule.add(dataSet);
+  res.send(dataSet);
 };
 app.post("/datasets", addDataSet);
 
+const classify = (req: Request, res: Response) => {
 
+  res.send({});
+
+}
+app.post("classify", classify)
 
 const server = app.listen(port, () => {
   console.log(`⚡️⚡️${productName} is running at http://localhost:${port}`); ``

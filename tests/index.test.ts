@@ -32,9 +32,14 @@ test("datasets", async () => {
     .get(`/datasets/name/${dataSetName}/`)
     .set('Authorization', token);
   expect(getStatus).toBe(200);
-  const { name, dataTypes }: DataSet = body;
+  const { name, dataTypes, items }: DataSet = body;
   expect(dataSetName).toBe(name);
   expect(dataTypes).toBe("datapoint");
+  expect(JSON.stringify(body)).toBe(JSON.stringify(pointsDataSet));
+
+});
+
+test("classify", async () => {
 
 });
 
