@@ -1,10 +1,10 @@
-import { ClassifiersBase } from "./classifiersBase";
-import { TextClassifiers } from "./textClassifiers";
+import { ClassifierBase } from "./classifierBase";
+import { TextClassifier } from "./textClassifier";
 export const ClassifiersFactory = () => {
-    const classifiersLookup = new Map<string, ClassifiersBase>([
-        ["text", TextClassifiers()],
+    const classifiersLookup = new Map<string, ClassifierBase>([
+        ["text", TextClassifier()],
     ]);
-    const create = (name: string): ClassifiersBase => {
+    const create = (name: string): ClassifierBase => {
         const authenticator = classifiersLookup.get(name);
         if (!authenticator)
             throw new Error(`Cannot find classifierss name ${name}`);

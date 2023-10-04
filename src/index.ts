@@ -5,6 +5,8 @@ import { AuthenticationFactory } from "./modules/authentication/authenticationFa
 import { AuthenticationBase } from "./modules/authentication/authenticationBase";
 import { DatasetsFactory } from "./modules/dataSets/dataSetsFactory"
 import { DataSet } from "./models/dataSet";
+import { ClassifyQuery } from "./models/classifyQuery";
+import { ClassifiersFactory } from "./modules/classifiers/classifiersFactory"
 
 dotenv.config();
 
@@ -50,12 +52,19 @@ const addDataSet = async (req: Request, res: Response) => {
 };
 app.post("/datasets", addDataSet);
 
-const classify = (req: Request, res: Response) => {
+const classify = async (req: Request, res: Response) => {
+  const query = req.body as ClassifyQuery;
+  const classifier = ClassifiersFactory().create("text");
+  console.log("classifier", classifier)
+
+  const resposne = await classifier.classify(query);
+  console.log("resposne", resposne)
+
 
   res.send({});
 
 }
-app.post("classify", classify)
+app.post("/classify", classify)
 
 const server = app.listen(port, () => {
   console.log(`⚡️⚡️${productName} is running at http://localhost:${port}`); ``
