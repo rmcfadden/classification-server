@@ -6,6 +6,7 @@ import { TextFeature } from "../src/models/textFeature";
 
 import { DataSet } from "../src/models/dataSet"
 import { ClassifyDataSetQuery } from "../src/models/classifyDataSetQuery"
+import { FeaturePredictionResult } from "../src/models/featurePredictionResult";
 
 dotenv.config();
 
@@ -43,8 +44,6 @@ test("datasets", async () => {
 });
 
 test("classify", async () => {
-
-  console.log("HERE!!!!!!!!!!!!!!!!!!!!");
   const dataSetName = "testText"
   const textFeatures: TextFeature[] = [
     { text: "apple", feature: "fruit" },
@@ -54,22 +53,24 @@ test("classify", async () => {
     { text: "oat", feature: "grain" },
   ];
   const foodDataSet: DataSet = { name: dataSetName, dataTypes: "textFeature", items: textFeatures }
-
   const classifyQuery: ClassifyDataSetQuery = {
     type: "text",
     dataSet: foodDataSet,
-    query: "lettuce"
+    text: "lettuce"
   }
-
   const { status, body } = await request(app)
     .post(`/classify`)
     .set('Authorization', token)
     .send(JSON.stringify(classifyQuery))
     .set('Content-type', 'application/json');
-
-  console.log("BODY", body);
   expect(status).toBe(200);
 
+  const { predictions }: FeaturePredictionResult = body;
+  const [prediction] = predictions;
+  const { feature, probability } = prediction;
+  expect(feature).toBe("vegetable");
+  expect(probability).toBe(100);
+  expect(status).toBe(200);
 });
 
 afterAll(() => server.close());
