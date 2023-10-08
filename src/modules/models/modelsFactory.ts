@@ -1,10 +1,10 @@
-import { ModelsBase } from "./modelsBase";
-import { TextModels } from "./textModels";
+import { ModelBase } from "./modelBase";
+import { TextModel } from "./textModel";
 export const ModelsFactory = () => {
-    const modelsLookup = new Map<string, ModelsBase>([
-        ["text", TextModels()],
+    const modelsLookup = new Map<string, ModelBase>([
+        ["text", TextModel([])],
     ]);
-    const create = (name: string): ModelsBase => {
+    const create = (name: string): ModelBase => {
         const authenticator = modelsLookup.get(name);
         if (!authenticator) throw new Error(`Cannot find model name ${name}`);
         return authenticator;

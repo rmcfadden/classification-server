@@ -7,7 +7,7 @@ import { FeatureClassifyResponse } from "../../models/featureClassifyResponse";
 export const TextClassifier = () => {
     const classify = async (query: ClassifyQuery) => {
         const { text } = query;
-        const { dataSet } = query as ClassifyDataSetQuery
+        const { dataSet } = query as ClassifyDataSetQuery;
         const modelsFactory = ModelsFactory();
         const model = modelsFactory.create("text");
         const predictionModel = await model.train(dataSet);
