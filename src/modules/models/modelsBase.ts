@@ -1,5 +1,6 @@
 import { DataSet } from "../../models/dataSet";
-import { ModelsBase } from "../../models/modelsBase";
+import { Model } from "./model";
+
 export interface ModelsBase {
-    train: (dataSet: DataSet) => Promise<ModelsBase>
+    train: (dataSet: DataSet) => Promise<Model>
 }

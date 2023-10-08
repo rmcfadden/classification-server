@@ -11,7 +11,7 @@ export const TextClassifier = () => {
         const modelsFactory = ModelsFactory();
         const model = modelsFactory.create("text");
         const predictionModel = await model.train(dataSet);
-        const { predictions } = await predictionModel.predict(text);
+        const { predictions } = await predictionModel.predict(text) as FeatureClassifyResponse;
         return { predictions } as FeatureClassifyResponse;
     }
     return { classify } as ClassifierBase;

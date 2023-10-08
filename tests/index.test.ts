@@ -3,7 +3,6 @@ import request from "supertest";
 import dotenv from "dotenv";
 import { DataPoint } from "../src/models/dataPoint";
 import { TextFeature } from "../src/models/textFeature";
-
 import { DataSet } from "../src/models/dataSet"
 import { ClassifyDataSetQuery } from "../src/models/classifyDataSetQuery"
 import { FeaturePredictionResult } from "../src/models/featurePredictionResult";
@@ -24,7 +23,6 @@ test("datasets", async () => {
   const dataSetName = "test123"
   const dataPoints: DataPoint[] = [{ x: 1, y: 2, }, { x: 2, y: 4, }, { x: 4, y: 8 }];
   const pointsDataSet: DataSet = { name: dataSetName, dataTypes: "datapoint", items: dataPoints }
-
   const { status: addStatus } = await request(app)
     .post("/datasets/")
     .set('Authorization', token)
@@ -40,10 +38,9 @@ test("datasets", async () => {
   expect(dataSetName).toBe(name);
   expect(dataTypes).toBe("datapoint");
   expect(JSON.stringify(body)).toBe(JSON.stringify(pointsDataSet));
-
 });
 
-test("classify", async () => {
+test("classify text", async () => {
   const dataSetName = "testText"
   const textFeatures: TextFeature[] = [
     { text: "apple", feature: "fruit" },
@@ -64,7 +61,6 @@ test("classify", async () => {
     .send(JSON.stringify(classifyQuery))
     .set('Content-type', 'application/json');
   expect(status).toBe(200);
-
   const { predictions }: FeaturePredictionResult = body;
   const [prediction] = predictions;
   const { feature, probability } = prediction;
@@ -72,5 +68,4 @@ test("classify", async () => {
   expect(probability).toBe(100);
   expect(status).toBe(200);
 });
-
 afterAll(() => server.close());
