@@ -1,4 +1,4 @@
 import { DataPoint } from "./dataPoint";
-export interface dataPointFeature extends DataPoint {
+export interface DataPointFeature extends DataPoint {
     feature: string;
 }

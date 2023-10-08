@@ -3,6 +3,8 @@ import request from "supertest";
 import dotenv from "dotenv";
 import { DataPoint } from "../src/models/dataPoint";
 import { TextFeature } from "../src/models/textFeature";
+import { DataPointFeature } from "../src/models/dataPointFeature";
+
 import { DataSet } from "../src/models/dataSet"
 import { ClassifyDataSetQuery } from "../src/models/classifyDataSetQuery"
 import { FeaturePredictionResult } from "../src/models/featurePredictionResult";
@@ -29,7 +31,6 @@ test("datasets", async () => {
     .send(JSON.stringify(pointsDataSet))
     .set('Content-type', 'application/json');
   expect(addStatus).toBe(200);
-
   const { status: getStatus, body } = await request(app)
     .get(`/datasets/name/${dataSetName}/`)
     .set('Authorization', token);
@@ -38,6 +39,34 @@ test("datasets", async () => {
   expect(dataSetName).toBe(name);
   expect(dataTypes).toBe("datapoint");
   expect(JSON.stringify(body)).toBe(JSON.stringify(pointsDataSet));
+});
+
+test("classify dataPoints", async () => {
+  const dataSetName = "testDataPoints";
+  const dataPointFeatures: DataPointFeature[] = [
+    { x: 0, y: 0, feature: "fruit" },
+    { x: 1, y: 1, feature: "fruit" },
+    { x: 3, y: 3, feature: "vegetable" },
+    { x: 4, y: 4, feature: "vegetable" },
+    { x: -2, y: -2, feature: "grain" },
+  ];
+  const foodDataSet: DataSet = { name: dataSetName, dataTypes: "dataPointFeature", items: dataPointFeatures }
+  const classifyQuery: ClassifyDataSetQuery = {
+    type: "dataPoint",
+    dataSet: foodDataSet,
+    text: ".75,.80"
+  }
+  const { status, body } = await request(app)
+    .post(`/classify`)
+    .set('Authorization', token)
+    .send(JSON.stringify(classifyQuery))
+    .set('Content-type', 'application/json');
+  expect(status).toBe(200);
+  const { predictions }: FeaturePredictionResult = body;
+  const [{ feature, probability }] = predictions;
+  expect(feature).toBe("fruit");
+  expect(probability).toBe(100);
+  expect(status).toBe(200);
 });
 
 test("classify text", async () => {
@@ -62,10 +91,10 @@ test("classify text", async () => {
     .set('Content-type', 'application/json');
   expect(status).toBe(200);
   const { predictions }: FeaturePredictionResult = body;
-  const [prediction] = predictions;
-  const { feature, probability } = prediction;
+  const [{ feature, probability }] = predictions;
   expect(feature).toBe("vegetable");
   expect(probability).toBe(100);
   expect(status).toBe(200);
 });
+
 afterAll(() => server.close());

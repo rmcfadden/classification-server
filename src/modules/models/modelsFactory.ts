@@ -1,8 +1,11 @@
 import { ModelBase } from "./modelBase";
 import { TextModel } from "./textModel";
+import { DataPointsModel } from "./dataPointsModel";
+
 export const ModelsFactory = () => {
     const modelsLookup = new Map<string, ModelBase>([
         ["text", TextModel([])],
+        ["dataPoint", DataPointsModel([])],
     ]);
     const create = (name: string): ModelBase => {
         const authenticator = modelsLookup.get(name);

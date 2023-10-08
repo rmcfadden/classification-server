@@ -54,7 +54,7 @@ app.post("/datasets", addDataSet);
 
 const classify = async (req: Request, res: Response) => {
   const query = req.body as ClassifyQuery;
-  const classifier = ClassifiersFactory().create("text");
+  const classifier = ClassifiersFactory().create(query.type);
   const response = await classifier.classify(query);
   res.send(response);
 }
