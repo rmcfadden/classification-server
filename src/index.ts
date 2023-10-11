@@ -60,7 +60,7 @@ const classify = async (req: Request, res: Response, next: NextFunction) => {
     res.send(response);
   }
   catch (err) {
-    next(err);
+    next(err); // TODO: figure out how todo error handling here
   }
 }
 app.post("/classify", classify)

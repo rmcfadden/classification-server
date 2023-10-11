@@ -9,6 +9,7 @@ import { DataSet } from "../src/models/dataSet";
 import { ClassifyDataSetQuery } from "../src/models/classifyDataSetQuery";
 import { FeaturePredictionResult } from "../src/models/featurePredictionResult";
 import { ImageFeature } from "../src/models/imageFeature";
+import { NumericalPredictionResult } from "../src/models/numericalPredictionResult";
 
 dotenv.config();
 
@@ -93,9 +94,9 @@ test("classify dataPoints", async () => {
     items: dataPoints,
   };
   const classifyQuery: ClassifyDataSetQuery = {
-    type: "dataPoint",
+    type: "numerical",
     dataSet: pointsDataSet,
-    text: ".75,.80",
+    text: "1",
   };
   const { status, body } = await request(app)
     .post(`/classify`)
@@ -103,11 +104,8 @@ test("classify dataPoints", async () => {
     .send(JSON.stringify(classifyQuery))
     .set("Content-type", "application/json");
   expect(status).toBe(200);
-  const { predictions }: FeaturePredictionResult = body;
-  const [{ feature, probability }] = predictions;
-  expect(feature).toBe("fruit");
-  expect(probability).toBe(100);
-  expect(status).toBe(200);
+  const { result }: NumericalPredictionResult = body;
+  expect(result).toBe(1);
 });
 
 test("classify text", async () => {
