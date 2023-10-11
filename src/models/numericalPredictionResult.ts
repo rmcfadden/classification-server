@@ -1,2 +1,1 @@
-export interface NumericalPredictionResult {
-}
+export interface NumericalPredictionResult {}

@@ -13,7 +13,6 @@ export const DataPointsModel = (dataFeatures: DataPointFeature[]) => {
       (a: DataPointFeature, b: DataPointFeature) =>
         Math.hypot(x - a.x, y - a.y) - Math.hypot(x - b.x, y - b.y)
     );
-    console.log("sortedFeatures", sortedFeatures);
     // TODO: how do I determine probability based on distance
     return {
       predictions: sortedFeatures.map(({ feature }) => ({
