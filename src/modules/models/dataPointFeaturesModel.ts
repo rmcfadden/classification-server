@@ -6,7 +6,7 @@ import { FeaturePredictionResult } from "../../models/featurePredictionResult";
 import { DataPoint } from "../../models/dataPoint";
 import { DataPointConverter } from "../converters/dataPointConverter";
 
-export const DataPointsModel = (dataFeatures: DataPointFeature[]) => {
+export const DataPointFeaturesModel = (dataFeatures: DataPointFeature[]) => {
   const predict = async (input: string): Promise<PredictionResult> => {
     const { x, y }: DataPoint = DataPointConverter().parse(input);
     const sortedFeatures = [...dataFeatures].sort(
@@ -23,6 +23,6 @@ export const DataPointsModel = (dataFeatures: DataPointFeature[]) => {
     } as FeaturePredictionResult;
   };
   const train = async (dataSet: DataSet) =>
-    DataPointsModel(dataSet.items as DataPointFeature[]);
+    DataPointFeaturesModel(dataSet.items as DataPointFeature[]);
   return { predict, train } as ModelBase;
 };

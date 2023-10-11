@@ -41,7 +41,7 @@ test("datasets", async () => {
   expect(JSON.stringify(body)).toBe(JSON.stringify(pointsDataSet));
 });
 
-test("classify dataPoints", async () => {
+test("classify dataPoint features", async () => {
   const dataSetName = "testDataPoints";
   const dataPointFeatures: DataPointFeature[] = [
     { x: 0, y: 0, feature: "fruit" },
@@ -52,7 +52,7 @@ test("classify dataPoints", async () => {
   ];
   const foodDataSet: DataSet = { name: dataSetName, dataTypes: "dataPointFeature", items: dataPointFeatures }
   const classifyQuery: ClassifyDataSetQuery = {
-    type: "dataPoint",
+    type: "dataPointFeature",
     dataSet: foodDataSet,
     text: ".75,.80"
   }
