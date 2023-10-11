@@ -9,7 +9,6 @@ export const ModelsFactory = () => {
         ["text", TextModel([])],
         ["dataPointFeature", DataPointFeaturesModel([])],
         ["dataPoint", DataPointsModel([])],
-
         ["image", ImageModel([])],
     ]);
     const create = (name: string): ModelBase => {
