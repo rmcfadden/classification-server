@@ -80,21 +80,21 @@ test("classify dataPoint features", async () => {
 
 test("classify dataPoints", async () => {
   const dataSetName = "testDataPoints";
-  const dataPointFeatures: DataPointFeature[] = [
-    { x: 0, y: 0, feature: "fruit" },
-    { x: 1, y: 1, feature: "fruit" },
-    { x: 3, y: 3, feature: "vegetable" },
-    { x: 4, y: 4, feature: "vegetable" },
-    { x: -2, y: -2, feature: "grain" },
+  const dataPoints: DataPoint[] = [
+    { x: 0, y: 0 },
+    { x: 1, y: 1 },
+    { x: 3, y: 3 },
+    { x: 4, y: 4 },
+    { x: -2, y: -2 },
   ];
-  const foodDataSet: DataSet = {
+  const pointsDataSet: DataSet = {
     name: dataSetName,
-    dataTypes: "dataPointFeature",
-    items: dataPointFeatures,
+    dataTypes: "dataPoint",
+    items: dataPoints,
   };
   const classifyQuery: ClassifyDataSetQuery = {
     type: "dataPoint",
-    dataSet: foodDataSet,
+    dataSet: pointsDataSet,
     text: ".75,.80",
   };
   const { status, body } = await request(app)

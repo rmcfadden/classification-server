@@ -52,11 +52,16 @@ const addDataSet = async (req: Request, res: Response) => {
 };
 app.post("/datasets", addDataSet);
 
-const classify = async (req: Request, res: Response) => {
-  const query = req.body as ClassifyQuery;
-  const classifier = ClassifiersFactory().create(query.type);
-  const response = await classifier.classify(query);
-  res.send(response);
+const classify = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const query = req.body as ClassifyQuery;
+    const classifier = ClassifiersFactory().create(query.type);
+    const response = await classifier.classify(query);
+    res.send(response);
+  }
+  catch (err) {
+    next(err);
+  }
 }
 app.post("/classify", classify)
 
