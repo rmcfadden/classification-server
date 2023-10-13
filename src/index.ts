@@ -8,7 +8,7 @@ import { DataSet } from "./models/dataSet";
 import { ClassifyQuery } from "./models/classifyQuery";
 import { ClassifiersFactory } from "./modules/classifiers/classifiersFactory";
 import { AsyncErrorHandler } from "./core/asyncErrorHandler";
-import { error } from "console";
+import { getModules } from "./modules/index";
 
 dotenv.config();
 
@@ -54,13 +54,19 @@ const addDataSet = async (req: Request, res: Response) => {
 };
 app.post("/datasets", addDataSet);
 
-const classify = AsyncErrorHandler(async (req: Request, res: Response, next: NextFunction) => {
+const classify = AsyncErrorHandler(async (req: Request, res: Response) => {
     const query = req.body as ClassifyQuery;
     const classifier = ClassifiersFactory().create(query.type);
     const response = await classifier.classify(query);
     res.send(response);
 });
 app.post("/classify", classify);
+
+const modules = AsyncErrorHandler(async (_: Request, res: Response) => {
+    const currentModules = getModules();
+    res.send(currentModules);
+});
+app.get("/modules", modules);
 
 const server = app.listen(port, () => {
     console.log(`⚡️⚡️${productName} is running at http://localhost:${port}`);

@@ -14,8 +14,7 @@ export const ClassifiersFactory = () => {
     ]);
     const create = (name: string): ClassifierBase => {
         const classifier = classifiersLookup.get(name);
-        if (!classifier)
-            throw new Error(`Cannot find classifier name ${name}`);
+        if (!classifier) throw new Error(`Cannot find classifier name ${name}`);
         return classifier;
     };
     const getKeys = (): string[] => Array.from(classifiersLookup.keys());

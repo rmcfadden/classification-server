@@ -1,9 +1,9 @@
 import { PreProcessorBase } from "./preProcessorBase";
-import { TextPreProcessing } from "./textPreProcessing";
+import { TextNoisePreProcessor } from "./textNoisePreProcessor";
 
-export const PreProcessingsFactory = () => {
+export const PreProcessorsFactory = () => {
     const preProcessorsLookup = new Map<string, PreProcessorBase>([
-        ["text-noise", TextPreProcessing([])],
+        ["text-noise", TextNoisePreProcessor()],
     ]);
     const create = (name: string): PreProcessorBase => {
         const preProcesser = preProcessorsLookup.get(name);
