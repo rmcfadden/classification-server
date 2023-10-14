@@ -176,4 +176,15 @@ test("classify image", async () => {
     expect(status).toBe(200);
 });
 
+test("modules", async () => {
+    const { status, body } = await request(app)
+        .get(`/modules`)
+        .set("Authorization", token)
+        .set("Content-type", "application/json");
+
+    console.log('BODY', body);
+    expect(status).toBe(200);
+
+});
+
 afterAll(() => server.close());

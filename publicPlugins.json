@@ -1,0 +1,20 @@
+{
+    "plugins": [
+        {
+            "name": "KdTreeClassification",
+            "title": "KD Tree Classification",
+            "modules": [
+                {
+                    "name": "KDTreeClassifationModel",
+                    "type": "model",
+                    "url": ""
+                },
+                {
+                    "name": "KDTreeClassifationModel",
+                    "type": "dataSet",
+                    "url": ""
+                }
+            ]
+        }
+    ]
+}
