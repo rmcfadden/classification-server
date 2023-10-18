@@ -1,4 +1,4 @@
-# classsification-server
+# classification-server
 
 ## 1. Load dataset
 ## 2. Train

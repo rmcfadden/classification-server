@@ -1,5 +1,6 @@
 {
     "dependencies": {
+        "classification-server-kd-tree": "github:rmcfadden/classification-server-kd-tree",
         "dotenv": "^16.3.1",
         "express": "^4.18.2"
     },
@@ -23,12 +24,15 @@
         "start": "node dist/index.js",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
         "test": "jest --coverage",
-        "build-cli": "npx tsc ./cli"
+        "build-cli": "npx tsc cli/cali.ts --outDir dist-cli"
     },
     "name": "classification-server",
     "description": "",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "dist/index.js",
+    "files": [
+        "/dist"
+    ],
     "keywords": [],
     "author": "",
     "type": "commonjs",
