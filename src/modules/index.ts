@@ -1,4 +1,4 @@
-import { ModuleMeta } from "../models/moduleMeta";
+import { ModuleMeta } from "../types/moduleMeta";
 import { ClassifiersFactory } from "./classifiers/classifiersFactory";
 import { PreProcessorsFactory } from "./preProcessors/preProcessorsFactory";
 import { ModelsFactory } from "./models/modelsFactory";

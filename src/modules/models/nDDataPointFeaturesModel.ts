@@ -1,27 +1,28 @@
-import { DataSet } from "../../models/dataSet";
+import { DataSet } from "../../types/dataSet";
 import { ModelBase } from "./modelBase";
-import { PredictionResult } from "../../models/predictionResult";
-import { DataPointFeature } from "../../models/dataPointFeature";
-import { FeaturePredictionResult } from "../../models/featurePredictionResult";
-import { DataPoint } from "../../models/dataPoint";
-import { DataPointConverter } from "../converters/dataPointConverter";
+import { PredictionResult } from "../../types/predictionResult";
+import { NDDataPointFeature } from "../../types/nDDataPointFeature";
+import { FeaturePredictionResult } from "../../types/featurePredictionResult";
+import { NDDataPoint } from "../../types/nDDataPoint";
+import { NDDataPointConverter } from "../converters/nDDataPointConverter";
 
-export const DataPointFeaturesModel = (dataFeatures: DataPointFeature[]) => {
-  const predict = async (input: string): Promise<PredictionResult> => {
-    const { x, y }: DataPoint = DataPointConverter().parse(input);
-    const sortedFeatures = [...dataFeatures].sort(
-      (a: DataPointFeature, b: DataPointFeature) =>
-        Math.hypot(x - a.x, y - a.y) - Math.hypot(x - b.x, y - b.y)
-    );
-    // TODO: how do I determine probability based on distance
-    return {
-      predictions: sortedFeatures.map(({ feature }) => ({
-        feature,
-        probability: 100,
-      })),
-    } as FeaturePredictionResult;
-  };
-  const train = async (dataSet: DataSet) =>
-    DataPointFeaturesModel(dataSet.items as DataPointFeature[]);
-  return { predict, train } as ModelBase;
+export const NDDataPointFeaturesModel = (dataFeatures: NDDataPointFeature[]) => {
+    const predict = async (input: string): Promise<PredictionResult> => {
+        const { values }: NDDataPoint = NDDataPointConverter().parse(input);
+        const sortedFeatures = [...dataFeatures].sort(
+            (a: NDDataPointFeature, b: NDDataPointFeature) =>
+                Math.hypot(...a.values.map((a1, i) => values[i] - a1)) -
+                Math.hypot(...b.values.map((b1, i) => values[i] - b1))
+        );
+        // TODO: how do I determine probability based on distance (posterior probability?)
+        return {
+            predictions: sortedFeatures.map(({ feature }) => ({
+                feature,
+                probability: 100,
+            })),
+        } as FeaturePredictionResult;
+    };
+    const train = async (dataSet: DataSet) =>
+        NDDataPointFeaturesModel(dataSet.items as NDDataPointFeature[]);
+    return { predict, train } as ModelBase;
 };

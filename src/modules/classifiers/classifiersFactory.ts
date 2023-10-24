@@ -4,10 +4,12 @@ import { DataPointClassifier } from "./dataPointClassifier";
 import { ImageClassifier } from "./imageClassifier";
 import { TextClassifier } from "./textClassifier";
 import { NumericalClassifier } from "./numericalClassifier";
+import { NDDataPointFeatureClassifier } from "./nDDataPointFeatureClassifier";
 export const ClassifiersFactory = () => {
     const classifiersLookup = new Map<string, ClassifierBase>([
         ["text", TextClassifier()],
         ["dataPointFeature", DataPointFeatureClassifier()],
+        ["nDDataPointFeature", NDDataPointFeatureClassifier()],
         ["dataPoint", DataPointClassifier()],
         ["numerical", NumericalClassifier()],
         ["image", ImageClassifier()],

@@ -34,7 +34,7 @@
         "/dist"
     ],
     "exports": {
-        ".": "/dist/index.js"
+        ".": "./dist/index.js"
     },
     "keywords": [],
     "author": "",

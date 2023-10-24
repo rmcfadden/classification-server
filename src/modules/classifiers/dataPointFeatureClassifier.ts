@@ -1,8 +1,8 @@
-import { ClassifyQuery } from "../../models/classifyQuery";
+import { ClassifyQuery } from "../../types/classifyQuery";
 import { ClassifierBase } from "./classifierBase";
-import { ClassifyDataSetQuery } from "../../models/classifyDataSetQuery"
-import { ModelsFactory } from "../models/modelsFactory"
-import { FeatureClassifyResponse } from "../../models/featureClassifyResponse";
+import { ClassifyDataSetQuery } from "../../types/classifyDataSetQuery";
+import { ModelsFactory } from "../models/modelsFactory";
+import { FeatureClassifyResponse } from "../../types/featureClassifyResponse";
 export const DataPointFeatureClassifier = () => {
     const classify = async (query: ClassifyQuery) => {
         const { text } = query;
@@ -10,8 +10,8 @@ export const DataPointFeatureClassifier = () => {
         const modelsFactory = ModelsFactory();
         const model = modelsFactory.create("dataPointFeature");
         const predictionModel = await model.train(dataSet);
-        const { predictions } = await predictionModel.predict(text) as FeatureClassifyResponse;
+        const { predictions } = (await predictionModel.predict(text)) as FeatureClassifyResponse;
         return { predictions } as FeatureClassifyResponse;
-    }
+    };
     return { classify } as ClassifierBase;
-}
+};

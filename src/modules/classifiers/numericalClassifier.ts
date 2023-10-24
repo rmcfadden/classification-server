@@ -1,9 +1,9 @@
-import { ClassifyQuery } from "../../models/classifyQuery";
+import { ClassifyQuery } from "../../types/classifyQuery";
 import { ClassifierBase } from "./classifierBase";
-import { ClassifyDataSetQuery } from "../../models/classifyDataSetQuery"
-import { ModelsFactory } from "../models/modelsFactory"
-import { NumericalClassifyResponse } from "../../models/numericalClassifyResponse";
-import { NumericalPredictionResult } from "../../models/numericalPredictionResult";
+import { ClassifyDataSetQuery } from "../../types/classifyDataSetQuery";
+import { ModelsFactory } from "../models/modelsFactory";
+import { NumericalClassifyResponse } from "../../types/numericalClassifyResponse";
+import { NumericalPredictionResult } from "../../types/numericalPredictionResult";
 export const NumericalClassifier = () => {
     const classify = async (query: ClassifyQuery) => {
         const { text } = query;
@@ -11,8 +11,8 @@ export const NumericalClassifier = () => {
         const modelsFactory = ModelsFactory();
         const model = modelsFactory.create("dataPoint");
         const predictionModel = await model.train(dataSet);
-        const { result } = await predictionModel.predict(text) as NumericalPredictionResult;
+        const { result } = (await predictionModel.predict(text)) as NumericalPredictionResult;
         return { result } as NumericalClassifyResponse;
-    }
+    };
     return { classify } as ClassifierBase;
-}
+};

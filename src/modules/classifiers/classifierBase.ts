@@ -1,5 +1,5 @@
-import { ClassifyQuery } from "../../models/classifyQuery";
-import { ClassifyResponse } from "../../models/classifyReponse";
+import { ClassifyQuery } from "../../types/classifyQuery";
+import { ClassifyResponse } from "../../types/classifyReponse";
 export interface ClassifierBase {
     classify: (query: ClassifyQuery) => Promise<ClassifyResponse>;
 }

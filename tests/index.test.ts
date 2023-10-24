@@ -1,15 +1,16 @@
 import app, { server } from "../src/index";
 import request from "supertest";
 import dotenv from "dotenv";
-import { DataPoint } from "../src/models/dataPoint";
-import { TextFeature } from "../src/models/textFeature";
-import { DataPointFeature } from "../src/models/dataPointFeature";
+import { DataPoint } from "../src/types/dataPoint";
+import { TextFeature } from "../src/types/textFeature";
+import { DataPointFeature } from "../src/types/dataPointFeature";
 
-import { DataSet } from "../src/models/dataSet";
-import { ClassifyDataSetQuery } from "../src/models/classifyDataSetQuery";
-import { FeaturePredictionResult } from "../src/models/featurePredictionResult";
-import { ImageFeature } from "../src/models/imageFeature";
-import { NumericalPredictionResult } from "../src/models/numericalPredictionResult";
+import { DataSet } from "../src/types/dataSet";
+import { ClassifyDataSetQuery } from "../src/types/classifyDataSetQuery";
+import { FeaturePredictionResult } from "../src/types/featurePredictionResult";
+import { ImageFeature } from "../src/types/imageFeature";
+import { NumericalPredictionResult } from "../src/types/numericalPredictionResult";
+import { NDDataPointFeature } from "../src/types/nDDataPointFeature";
 
 dotenv.config();
 
@@ -83,6 +84,38 @@ test("classify dataPoint features", async () => {
     expect(status).toBe(200);
 });
 
+test("classify nDDataPoints", async () => {
+    const dataSetName = "testDataPoints";
+    const dataPoints: NDDataPointFeature[] = [
+        { values: [0, 0], feature: "fruit" },
+        { values: [1, 1], feature: "fruit" },
+        { values: [3, 3], feature: "vegetable" },
+        { values: [4, 4], feature: "vegetable" },
+        { values: [-2, -2], feature: "grain" },
+    ];
+    const pointsDataSet: DataSet = {
+        name: dataSetName,
+        dataTypes: "nDDataPoint",
+        items: dataPoints,
+    };
+    const classifyQuery: ClassifyDataSetQuery = {
+        type: "nDDataPointFeature",
+        dataSet: pointsDataSet,
+        text: ".75,.80",
+    };
+    const { status, body } = await request(app)
+        .post(`/classify`)
+        .set("Authorization", token)
+        .send(JSON.stringify(classifyQuery))
+        .set("Content-type", "application/json");
+
+    const { predictions }: FeaturePredictionResult = body;
+    const [{ feature, probability }] = predictions;
+    expect(feature).toBe("fruit");
+    expect(probability).toBe(100);
+    expect(status).toBe(200);
+});
+
 test("classify dataPoints", async () => {
     const dataSetName = "testDataPoints";
     const dataPoints: DataPoint[] = [
@@ -137,7 +170,6 @@ test("classify text", async () => {
         .send(JSON.stringify(classifyQuery))
         .set("Content-type", "application/json");
 
-    console.log("BODY", body);
     expect(status).toBe(200);
     const { predictions }: FeaturePredictionResult = body;
     const [{ feature, probability }] = predictions;
@@ -182,9 +214,8 @@ test("modules", async () => {
         .set("Authorization", token)
         .set("Content-type", "application/json");
 
-    console.log('BODY', body);
+    console.log("BODY", body);
     expect(status).toBe(200);
-
 });
 
 afterAll(() => server.close());

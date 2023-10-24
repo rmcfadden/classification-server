@@ -1,15 +1,17 @@
 import { ModelBase } from "./modelBase";
 import { TextModel } from "./textModel";
 import { DataPointFeaturesModel } from "./dataPointFeaturesModel";
-import { ImageModel } from "./imageModel";
+import { ImagesModel } from "./imagesModel";
 import { DataPointsModel } from "./dataPointsModel";
+import { NDDataPointFeaturesModel } from "./nDDataPointFeaturesModel";
 
 export const ModelsFactory = () => {
     const modelsLookup = new Map<string, ModelBase>([
         ["text", TextModel([])],
         ["dataPointFeature", DataPointFeaturesModel([])],
         ["dataPoint", DataPointsModel([])],
-        ["image", ImageModel([])],
+        ["nDDataPointFeature", NDDataPointFeaturesModel([])],
+        ["image", ImagesModel([])],
     ]);
     const create = (name: string): ModelBase => {
         const model = modelsLookup.get(name);

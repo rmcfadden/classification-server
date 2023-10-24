@@ -1,5 +1,5 @@
-import { DataSet } from "../../models/dataSet";
+import { DataSet } from "../../types/dataSet";
 export interface DataSetsBase {
-  add: (dataSet: DataSet) => Promise<void>;
-  get: (name: string) => Promise<DataSet | undefined>;
+    add: (dataSet: DataSet) => Promise<void>;
+    get: (name: string) => Promise<DataSet | undefined>;
 }
