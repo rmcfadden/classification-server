@@ -1,5 +1,4 @@
 import { Data } from "./data";
-
-interface NumberData extends Data {
+export interface NumberData extends Data {
     value: number;
 }

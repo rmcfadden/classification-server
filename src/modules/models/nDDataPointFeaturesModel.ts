@@ -1,5 +1,5 @@
 import { DataSet } from "../../types/dataSet";
-import { ModelBase } from "./modelBase";
+import { ModelBase } from "../../types/modelBase";
 import { PredictionResult } from "../../types/predictionResult";
 import { NDDataPointFeature } from "../../types/nDDataPointFeature";
 import { FeaturePredictionResult } from "../../types/featurePredictionResult";

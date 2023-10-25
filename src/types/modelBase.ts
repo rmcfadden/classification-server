@@ -1,5 +1,5 @@
-import { DataSet } from "../../types/dataSet";
-import { PredictionResult } from "../../types/predictionResult";
+import { DataSet } from "./dataSet";
+import { PredictionResult } from "./predictionResult";
 
 export interface ModelBase {
     train: (dataSet: DataSet) => Promise<ModelBase>;

@@ -1,6 +1,6 @@
 import { DataSet } from "../../types/dataSet";
 import { TextFeature } from "../../types/textFeature";
-import { ModelBase } from "./modelBase";
+import { ModelBase } from "../../types/modelBase";
 import { PredictionResult } from "../../types/predictionResult";
 
 export const TextModel = (textFeatures: TextFeature[]) => {

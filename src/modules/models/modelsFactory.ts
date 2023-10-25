@@ -1,4 +1,4 @@
-import { ModelBase } from "./modelBase";
+import { ModelBase } from "../../types/modelBase";
 import { TextModel } from "./textModel";
 import { DataPointFeaturesModel } from "./dataPointFeaturesModel";
 import { ImagesModel } from "./imagesModel";

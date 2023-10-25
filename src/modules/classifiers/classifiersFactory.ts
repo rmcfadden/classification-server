@@ -1,4 +1,4 @@
-import { ClassifierBase } from "./classifierBase";
+import { ClassifierBase } from "../../types/classifierBase";
 import { DataPointFeatureClassifier } from "./dataPointFeatureClassifier";
 import { DataPointClassifier } from "./dataPointClassifier";
 import { ImageClassifier } from "./imageClassifier";

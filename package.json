@@ -34,7 +34,10 @@
         "/dist"
     ],
     "exports": {
-        ".": "./dist/index.js"
+        ".": "./dist/index.js",
+        "./types": "./dist/types/index.js",
+        "./classifiers": "./dist/modules/classifiers/index.js",
+        "./converters": "./dist/modules/converters/index.js"
     },
     "keywords": [],
     "author": "",

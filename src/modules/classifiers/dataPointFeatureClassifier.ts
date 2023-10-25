@@ -1,5 +1,5 @@
 import { ClassifyQuery } from "../../types/classifyQuery";
-import { ClassifierBase } from "./classifierBase";
+import { ClassifierBase } from "../../types/classifierBase";
 import { ClassifyDataSetQuery } from "../../types/classifyDataSetQuery";
 import { ModelsFactory } from "../models/modelsFactory";
 import { FeatureClassifyResponse } from "../../types/featureClassifyResponse";

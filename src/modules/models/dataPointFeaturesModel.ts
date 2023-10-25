@@ -1,5 +1,5 @@
 import { DataSet } from "../../types/dataSet";
-import { ModelBase } from "./modelBase";
+import { ModelBase } from "../../types/modelBase";
 import { PredictionResult } from "../../types/predictionResult";
 import { DataPointFeature } from "../../types/dataPointFeature";
 import { FeaturePredictionResult } from "../../types/featurePredictionResult";
