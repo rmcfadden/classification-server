@@ -1,9 +1,0 @@
-{
-    "plugins": [
-        {
-            "name": "KdTreeClassifier",
-            "title": "KD Tree Classifier",
-            "url": "https://github.com/rmcfadden/classification-server-kd-tree"
-        }
-    ]
-}
