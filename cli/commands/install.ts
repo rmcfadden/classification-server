@@ -1,6 +1,4 @@
-
-
-import { exec } from 'child_process';
+import { exec } from "child_process";
 
 const run = async (cmd: string) => {
     const child = exec(cmd, (err) => {
@@ -11,12 +9,15 @@ const run = async (cmd: string) => {
     if (!stdout) return console.log("stdout must be defined");
     stderr.pipe(process.stderr);
     stdout.pipe(process.stdout);
-    await new Promise((resolve) => child.on('close', resolve));
+    await new Promise((resolve) => child.on("close", resolve));
 };
 
-
 const install = async (args: string[]) => {
-    await run('npm install https://github.com/rmcfadden/classification-server-kd-tree')
-}
+    const publicPlugins = await import("../publicPlugins.json");
+
+    console.log("publicPlugins", publicPlugins);
+
+    await run("npm install https://github.com/rmcfadden/classification-server-kd-tree");
+};
 
 export default install;

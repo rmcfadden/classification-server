@@ -1,7 +1,7 @@
-import { Data } from "./data"
-export interface DataSet {
+import { Data } from "./data";
+export interface DataSet<T = Data> {
     name: string;
     type?: string;
     dataTypes: string;
-    items: Data[];
+    items: T[];
 }

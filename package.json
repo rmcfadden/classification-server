@@ -24,7 +24,8 @@
         "start": "node dist/index.js",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
         "test": "jest --coverage",
-        "build-cli": "npx tsc cli/cali.ts --outDir dist-cli"
+        "build-cli": "npx tsc cli/cali.ts --outDir dist-cli --resolveJsonModule",
+        "cli-install": "node dist-cli/cali.js install"
     },
     "name": "classification-server",
     "description": "",

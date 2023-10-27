@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var child_process_1 = require("child_process");
 var run = function (cmd) { return __awaiter(void 0, void 0, void 0, function () {
-    var child;
+    var child, stderr, stdout;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -46,9 +46,14 @@ var run = function (cmd) { return __awaiter(void 0, void 0, void 0, function () 
                     if (err)
                         console.error(err);
                 });
-                child.stderr.pipe(process.stderr);
-                child.stdout.pipe(process.stdout);
-                return [4 /*yield*/, new Promise(function (resolve) { return child.on('close', resolve); })];
+                stderr = child.stderr, stdout = child.stdout;
+                if (!stderr)
+                    return [2 /*return*/, console.log("stderr must be defined")];
+                if (!stdout)
+                    return [2 /*return*/, console.log("stdout must be defined")];
+                stderr.pipe(process.stderr);
+                stdout.pipe(process.stdout);
+                return [4 /*yield*/, new Promise(function (resolve) { return child.on("close", resolve); })];
             case 1:
                 _a.sent();
                 return [2 /*return*/];
@@ -56,12 +61,16 @@ var run = function (cmd) { return __awaiter(void 0, void 0, void 0, function () 
     });
 }); };
 var install = function (args) { return __awaiter(void 0, void 0, void 0, function () {
+    var publicPlugins;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, run('npm install https://github.com/rmcfadden/classification-server-kd-tree')];
+            case 0: return [4 /*yield*/, Promise.resolve().then(function () { return require("../publicPlugins.json"); })];
             case 1:
+                publicPlugins = _a.sent();
+                console.log("publicPlugins", publicPlugins);
+                return [4 /*yield*/, run("npm install https://github.com/rmcfadden/classification-server-kd-tree")];
+            case 2:
                 _a.sent();
-                console.log('INSTALLL!!');
                 return [2 /*return*/];
         }
     });
