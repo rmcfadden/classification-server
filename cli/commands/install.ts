@@ -17,7 +17,7 @@ const install = async (args: string[]) => {
 
     console.log("publicPlugins", publicPlugins);
 
-    await run("npm install https://github.com/rmcfadden/classification-server-kd-tree");
+    await run("yarn add https://github.com/rmcfadden/classification-server-kd-tree");
 };
 
 export default install;
