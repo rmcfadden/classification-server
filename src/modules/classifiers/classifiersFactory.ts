@@ -13,9 +13,8 @@ export const ClassifiersFactory = () => {
         if (!classifier) throw new Error(`Cannot find classifier name ${name}`);
         return classifier;
     };
-    const add = (key: string, classifier: ClassifierBase) => { ClassifiersFactory.lookup = lookup.set(key, classifier); }
     const getKeys = (): string[] => Array.from(lookup.keys());
-    return { create, getKeys, add };
+    return { create, getKeys };
 };
 
 ClassifiersFactory.lookup = new Map<string, ClassifierBase>([
@@ -25,4 +24,8 @@ ClassifiersFactory.lookup = new Map<string, ClassifierBase>([
     ["dataPoint", DataPointClassifier()],
     ["numerical", NumericalClassifier()],
     ["image", ImageClassifier()],
-]);;
+]);
+
+ClassifiersFactory.add = (key: string, classifier: ClassifierBase) => {
+    ClassifiersFactory.lookup = ClassifiersFactory.lookup.set(key, classifier);
+}
