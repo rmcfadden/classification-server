@@ -19,3 +19,5 @@ export type { NumericalPredictionResult } from "./numericalPredictionResult";
 export type { PredictionResult } from "./predictionResult";
 export type { TextFeature } from "./textFeature";
 export type { ThreeDDataPoint } from "./threeDDataPoint";
+export type { PluginMeta } from "./pluginMeta"
+export type { PluginsMeta } from "./pluginsMeta"

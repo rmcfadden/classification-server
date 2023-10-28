@@ -5,20 +5,24 @@ import { ImageClassifier } from "./imageClassifier";
 import { TextClassifier } from "./textClassifier";
 import { NumericalClassifier } from "./numericalClassifier";
 import { NDDataPointFeatureClassifier } from "./nDDataPointFeatureClassifier";
+
 export const ClassifiersFactory = () => {
-    const classifiersLookup = new Map<string, ClassifierBase>([
-        ["text", TextClassifier()],
-        ["dataPointFeature", DataPointFeatureClassifier()],
-        ["nDDataPointFeature", NDDataPointFeatureClassifier()],
-        ["dataPoint", DataPointClassifier()],
-        ["numerical", NumericalClassifier()],
-        ["image", ImageClassifier()],
-    ]);
+    const { lookup } = ClassifiersFactory;
     const create = (name: string): ClassifierBase => {
-        const classifier = classifiersLookup.get(name);
+        const classifier = lookup.get(name);
         if (!classifier) throw new Error(`Cannot find classifier name ${name}`);
         return classifier;
     };
-    const getKeys = (): string[] => Array.from(classifiersLookup.keys());
-    return { create, getKeys };
+    const add = (key: string, classifier: ClassifierBase) => { ClassifiersFactory.lookup = lookup.set(key, classifier); }
+    const getKeys = (): string[] => Array.from(lookup.keys());
+    return { create, getKeys, add };
 };
+
+ClassifiersFactory.lookup = new Map<string, ClassifierBase>([
+    ["text", TextClassifier()],
+    ["dataPointFeature", DataPointFeatureClassifier()],
+    ["nDDataPointFeature", NDDataPointFeatureClassifier()],
+    ["dataPoint", DataPointClassifier()],
+    ["numerical", NumericalClassifier()],
+    ["image", ImageClassifier()],
+]);;

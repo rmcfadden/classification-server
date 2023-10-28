@@ -74,6 +74,10 @@ const server = app.listen(port, async () => {
     const { load } = PlugionLoader();
     await load();
 
+
+    const { getKeys } = ClassifiersFactory();
+    console.log("classifier keys: ", getKeys())
+
 });
 
 app.use((err: Error, _: Request, res: Response, _n: NextFunction) => {
