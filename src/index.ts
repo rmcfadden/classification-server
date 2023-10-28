@@ -9,6 +9,7 @@ import { ClassifyQuery } from "./types/classifyQuery";
 import { ClassifiersFactory } from "./modules/classifiers/classifiersFactory";
 import { AsyncErrorHandler } from "./core/asyncErrorHandler";
 import { getModules } from "./modules/index";
+import { PlugionLoader } from "./pluginLoader"
 
 dotenv.config();
 
@@ -68,9 +69,11 @@ const modules = AsyncErrorHandler(async (_: Request, res: Response) => {
 });
 app.get("/modules", modules);
 
-const server = app.listen(port, () => {
+const server = app.listen(port, async () => {
     console.log(`⚡️⚡️${productName} is running at http://localhost:${port}`);
-    ``;
+    const { load } = PlugionLoader();
+    await load();
+
 });
 
 app.use((err: Error, _: Request, res: Response, _n: NextFunction) => {
