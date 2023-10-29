@@ -9,8 +9,13 @@ export const PlugionLoader = () => {
     const isModelBase = (obj: any): obj is ModelBase => 'train' in obj && 'predict' in obj;
     const isClassifierBase = (obj: any): obj is ClassifierBase => 'classify' in obj;
     const isDataSetsBase = (obj: any): obj is DataSetsBase => 'add' in obj && 'get' in obj;
-
     const isAnyBase = (obj: any) => isModelBase(obj) || isClassifierBase(obj) || isDataSetsBase(obj);
+
+    const addToFactories = (obj) => {
+
+    }
+
+
 
     const loadPlugin = async (plugin: PluginMeta) => {
         const { url } = plugin;

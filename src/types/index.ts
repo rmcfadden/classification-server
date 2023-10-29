@@ -21,3 +21,4 @@ export type { TextFeature } from "./textFeature";
 export type { ThreeDDataPoint } from "./threeDDataPoint";
 export type { PluginMeta } from "./pluginMeta"
 export type { PluginsMeta } from "./pluginsMeta"
+export type { ISupportsName } from "./iSupportsName"
