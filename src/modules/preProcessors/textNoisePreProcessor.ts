@@ -6,5 +6,5 @@ export const TextNoisePreProcessor = () => {
         input !== undefined && input !== null
             ? replaceTexts.reduce((a: string, c: string) => a.replaceAll(c, ""), input)
             : input;
-    return { apply } as PreProcessorBase;
+    return { apply, name: "textNoise" } as PreProcessorBase;
 };
