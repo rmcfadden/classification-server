@@ -26,6 +26,5 @@ ClassifiersFactory.lookup = new Map<string, ClassifierBase>([
     ["image", ImageClassifier()],
 ]);
 
-ClassifiersFactory.add = (key: string, classifier: ClassifierBase) => {
-    ClassifiersFactory.lookup = ClassifiersFactory.lookup.set(key, classifier);
-}
+ClassifiersFactory.add = (key: string, classifier: ClassifierBase) =>
+    (ClassifiersFactory.lookup = ClassifiersFactory.lookup.set(key, classifier));
