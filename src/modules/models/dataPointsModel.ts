@@ -12,5 +12,5 @@ export const DataPointsModel = (dataPoints: DataPoint[]) => {
         return { result: y } as NumericalPredictionResult;
     };
     const train = async (dataSet: DataSet) => DataPointsModel(dataSet.items as DataPoint[]);
-    return { predict, train } as ModelBase;
+    return { predict, train, name: "dataPoint" } as ModelBase;
 };

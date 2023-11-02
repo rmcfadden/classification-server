@@ -24,5 +24,5 @@ ModelsFactory.lookup = new Map<string, ModelBase>([
     ["image", ImagesModel([])],
 ]);
 
-ModelsFactory.add = (key: string, model: ModelBase) =>
-    (ModelsFactory.lookup = ModelsFactory.lookup.set(key, model));
+ModelsFactory.add = (model: ModelBase) =>
+    (ModelsFactory.lookup = ModelsFactory.lookup.set(model.name, model));

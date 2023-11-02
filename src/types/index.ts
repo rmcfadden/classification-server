@@ -1,7 +1,7 @@
 export type { ClassifyDataSetQuery } from "./classifyDataSetQuery";
 export type { ClassifyQuery } from "./classifyQuery";
 export type { ClassifyResponse } from "./classifyResponse";
-export type { ClassifierBase } from "./classifierBase"
+export type { ClassifierBase } from "./classifierBase";
 export type { Data } from "./data";
 export type { DataPoint } from "./dataPoint";
 export type { DataPointFeature } from "./dataPointFeature";
@@ -19,6 +19,7 @@ export type { NumericalPredictionResult } from "./numericalPredictionResult";
 export type { PredictionResult } from "./predictionResult";
 export type { TextFeature } from "./textFeature";
 export type { ThreeDDataPoint } from "./threeDDataPoint";
-export type { PluginMeta } from "./pluginMeta"
-export type { PluginsMeta } from "./pluginsMeta"
-export type { ISupportsName } from "./iSupportsName"
+export type { PluginMeta } from "./pluginMeta";
+export type { PluginsMeta } from "./pluginsMeta";
+export type { PreProcessorBase } from "./preProcessorBase";
+export type { ISupportsName } from "./iSupportsName";

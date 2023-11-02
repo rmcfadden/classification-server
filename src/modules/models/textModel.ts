@@ -15,5 +15,5 @@ export const TextModel = (textFeatures: TextFeature[]) => {
         };
     };
     const train = async (dataSet: DataSet) => TextModel(dataSet.items as TextFeature[]);
-    return { predict, train } as ModelBase;
+    return { predict, train, name: "text" } as ModelBase;
 };

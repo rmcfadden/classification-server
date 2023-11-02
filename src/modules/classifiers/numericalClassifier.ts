@@ -14,5 +14,5 @@ export const NumericalClassifier = () => {
         const { result } = (await predictionModel.predict(text)) as NumericalPredictionResult;
         return { result } as NumericalClassifyResponse;
     };
-    return { classify } as ClassifierBase;
+    return { classify, name: "numerical" } as ClassifierBase;
 };

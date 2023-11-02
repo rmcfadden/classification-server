@@ -23,5 +23,5 @@ export const DataPointFeaturesModel = (dataFeatures: DataPointFeature[]) => {
     };
     const train = async (dataSet: DataSet) =>
         DataPointFeaturesModel(dataSet.items as DataPointFeature[]);
-    return { predict, train } as ModelBase;
+    return { predict, train, name: "dataPointFeature" } as ModelBase;
 };

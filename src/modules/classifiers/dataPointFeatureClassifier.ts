@@ -13,5 +13,5 @@ export const DataPointFeatureClassifier = () => {
         const { predictions } = (await predictionModel.predict(text)) as FeatureClassifyResponse;
         return { predictions } as FeatureClassifyResponse;
     };
-    return { classify } as ClassifierBase;
+    return { classify, name: "dataPointFeature" } as ClassifierBase;
 };

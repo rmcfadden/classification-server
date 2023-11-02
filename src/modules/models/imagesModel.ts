@@ -15,5 +15,5 @@ export const ImagesModel = (imageFeatures: ImageFeature[]) => {
         };
     };
     const train = async (dataSet: DataSet) => ImagesModel(dataSet.items as ImageFeature[]);
-    return { predict, train } as ModelBase;
+    return { predict, train, name: "image" } as ModelBase;
 };

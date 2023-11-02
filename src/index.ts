@@ -3,13 +3,13 @@ import dotenv from "dotenv";
 
 import { AuthenticationFactory } from "./modules/authentication/authenticationFactory";
 import { AuthenticationBase } from "./modules/authentication/authenticationBase";
-import { DatasetsFactory } from "./modules/dataSets/dataSetsFactory";
+import { DataSetsFactory } from "./modules/dataSets/dataSetsFactory";
 import { DataSet } from "./types/dataSet";
 import { ClassifyQuery } from "./types/classifyQuery";
 import { ClassifiersFactory } from "./modules/classifiers/classifiersFactory";
 import { AsyncErrorHandler } from "./core/asyncErrorHandler";
 import { getModules } from "./modules/index";
-import { PlugionLoader } from "./pluginLoader"
+import { PlugionLoader } from "./pluginLoader";
 
 dotenv.config();
 
@@ -41,7 +41,7 @@ app.get("/", index);
 
 const getDataSet = async (req: Request, res: Response) => {
     const name = req.params["name"];
-    const dataSetsModule = DatasetsFactory().create("memory");
+    const dataSetsModule = DataSetsFactory().create("memory");
     const dataSet = await dataSetsModule.get(name);
     res.send(dataSet);
 };
@@ -49,7 +49,7 @@ app.get("/datasets/name/:name", getDataSet);
 
 const addDataSet = async (req: Request, res: Response) => {
     const dataSet = req.body as DataSet;
-    const dataSetsModule = DatasetsFactory().create("memory");
+    const dataSetsModule = DataSetsFactory().create("memory");
     await dataSetsModule.add(dataSet);
     res.send(dataSet);
 };
@@ -74,10 +74,8 @@ const server = app.listen(port, async () => {
     const { load } = PlugionLoader();
     await load();
 
-
     const { getKeys } = ClassifiersFactory();
-    console.log("classifier keys: ", getKeys())
-
+    console.log("classifier keys: ", getKeys());
 });
 
 app.use((err: Error, _: Request, res: Response, _n: NextFunction) => {
