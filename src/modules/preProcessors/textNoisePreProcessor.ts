@@ -1,4 +1,4 @@
-import { PreProcessorBase } from "./preProcessorBase";
+import { PreProcessorBase } from "../../types/preProcessorBase";
 
 export const TextNoisePreProcessor = () => {
     const replaceTexts = [".", "?", ":", "!", ",", "\\", "/", '"', "'", " "];

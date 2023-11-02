@@ -1,4 +1,4 @@
-import { PreProcessorBase } from "./preProcessorBase";
+import { PreProcessorBase } from "../../types/preProcessorBase";
 import { TextNoisePreProcessor } from "./textNoisePreProcessor";
 
 export const PreProcessorsFactory = () => {

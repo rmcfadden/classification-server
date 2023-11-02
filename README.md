@@ -4,3 +4,5 @@
 ## 2. Train
 ## 3. Classify
 ## 4. Retrain
+
+yarn install --registry https://registry.yarnpkg.com/ 
