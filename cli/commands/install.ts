@@ -16,8 +16,11 @@ const install = async (args: string[]) => {
     const publicPlugins = await import("../publicPlugins.json");
 
     console.log("publicPlugins", publicPlugins);
+    const command =
+        "yarn add --registry https://registry.yarnpkg.com/ https://github.com/rmcfadden/classification-server-kd-tree";
+    console.log(`Running install commmand: ${command}`);
 
-    await run("yarn add https://github.com/rmcfadden/classification-server-kd-tree");
+    await run(command);
 };
 
 export default install;
