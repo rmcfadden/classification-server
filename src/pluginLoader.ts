@@ -1,4 +1,4 @@
-import { PluginsMeta } from "types/pluginsMeta";
+import { PluginsMeta } from "./types/pluginsMeta";
 import publicPlugins from "./publicPlugins.json";
 import { ClassifierBase, ModelBase, PluginMeta, PreProcessorBase } from "types";
 import { ClassifiersFactory } from "./modules/classifiers/classifiersFactory";
@@ -6,7 +6,7 @@ import { ModelsFactory } from "./modules/models/modelsFactory";
 import { DataSetsFactory } from "./modules/dataSets/dataSetsFactory";
 import { PreProcessorsFactory } from "./modules/preProcessors/preProcessorsFactory";
 
-import { DataSetsBase } from "types/dataSetsBase";
+import { DataSetsBase } from "./types/dataSetsBase";
 
 export const PlugionLoader = () => {
     const isModelBase = (obj: any): obj is ModelBase => "train" in obj && "predict" in obj;
