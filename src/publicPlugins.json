@@ -4,6 +4,11 @@
             "name": "KdTreeClassifier",
             "title": "KD Tree Classifier",
             "url": "https://github.com/rmcfadden/classification-server-kd-tree"
+        },
+        {
+            "name": "Text PreProcessors",
+            "title": "Text PreProcessors",
+            "url": "https://github.com/rmcfadden/classification-server-pre-processors."
         }
     ]
 }
