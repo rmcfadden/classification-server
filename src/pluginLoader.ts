@@ -29,15 +29,20 @@ export const PlugionLoader = () => {
     const loadPlugin = async (plugin: PluginMeta) => {
         const { url } = plugin;
         const packageName = url.substring(url.lastIndexOf("/") + 1);
-        console.log(`Loading package: ${packageName}`);
-        const currentModules = await import(`${packageName}`);
-        const plugins = Object.entries(currentModules)
-            .filter(([_, v]) => (v as any) instanceof Function)
-            .map(([_, v]) => (v as Function)())
-            .filter((f) => isAnyBase(f))
-            .map((f) => addToFactories(f));
+        try {
+            console.log(`Loading package: ${packageName}`);
+            const currentModules = await import(`${packageName}`);
+            const plugins = Object.entries(currentModules)
+                .filter(([_, v]) => (v as any) instanceof Function)
+                .map(([_, v]) => (v as Function)())
+                .filter((f) => isAnyBase(f))
+                .map((f) => addToFactories(f));
 
-        console.log("plugins", plugins);
+            console.log("plugins", plugins);
+        }
+        catch (err) {
+            console.log(`Error loading plugin ${packageName}.  Error: ${err}`)
+        }
     };
     const load = async () => {
         const { plugins } = publicPlugins as PluginsMeta;

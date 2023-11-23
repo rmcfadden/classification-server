@@ -24,7 +24,7 @@
         "postinstall": "npx tsc",
         "start": "node dist/index.js",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
-        "test": "jest --coverage",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
         "build-cli": "npx tsc cli/cali.ts --outDir dist-cli --resolveJsonModule",
         "cli-install": "node dist-cli/cali.js install"
     },
@@ -36,10 +36,10 @@
         "/dist"
     ],
     "exports": {
-        ".": "./dist/index.js",
-        "./types": "./dist/types/index.js",
-        "./classifiers": "./dist/modules/classifiers/index.js",
-        "./converters": "./dist/modules/converters/index.js"
+        ".": "./index.js",
+        "./types": "./types/index.js",
+        "./classifiers": "./modules/classifiers/index.js",
+        "./converters": "./modules/converters/index.js"
     },
     "keywords": [],
     "author": "",
