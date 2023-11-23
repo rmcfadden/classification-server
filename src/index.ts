@@ -72,10 +72,10 @@ app.get("/modules", modules);
 const server = app.listen(port, async () => {
     console.log(`⚡️⚡️${productName} is running at http://localhost:${port}`);
     const { load } = PlugionLoader();
-    await load();
-
-    const { getKeys } = ClassifiersFactory();
-    console.log("classifier keys: ", getKeys());
+    const shouldLoadPlugins = app.get("loadPlugins") !== "false";
+    shouldLoadPlugins && (await load());
+    !shouldLoadPlugins &&
+        console.log("Ignoring loading plugins because loadingPlugins is set to false");
 });
 
 app.use((err: Error, _: Request, res: Response, _n: NextFunction) => {

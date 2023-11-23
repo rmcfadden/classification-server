@@ -13,6 +13,7 @@ import { NumericalPredictionResult } from "../src/types/numericalPredictionResul
 import { NDDataPointFeature } from "../src/types/nDDataPointFeature";
 
 dotenv.config();
+app.set("loadPlugins", "false");
 
 const token =
     "Basic " +
@@ -214,7 +215,6 @@ test("modules", async () => {
         .set("Authorization", token)
         .set("Content-type", "application/json");
 
-    console.log("BODY", body);
     expect(status).toBe(200);
 });
 
