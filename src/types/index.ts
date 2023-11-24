@@ -12,6 +12,7 @@ export type { FeaturePrediction } from "./featurePrediction";
 export type { FeaturePredictionResult } from "./featurePredictionResult";
 export type { ImageFeature } from "./imageFeature";
 export type { ISupportsName } from "./iSupportsName";
+export type { KeyValuePair } from "./keyValuePair";
 export type { ModelBase } from "./modelBase";
 export type { NDDataPoint } from "./nDDataPoint";
 export type { NDDataPointFeature } from "./nDDataPointFeature";

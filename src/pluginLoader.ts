@@ -1,6 +1,13 @@
 import { PluginsMeta } from "./types/pluginsMeta";
 import publicPlugins from "./publicPlugins.json";
-import { ClassifierBase, ModelBase, PluginMeta, PreProcessorBase } from "types";
+import {
+    ClassifierBase,
+    ISupportsName,
+    ModelBase,
+    PluginMeta,
+    PreProcessorBase,
+    KeyValuePair,
+} from "types";
 import { ClassifiersFactory } from "./modules/classifiers/classifiersFactory";
 import { ModelsFactory } from "./modules/models/modelsFactory";
 import { DataSetsFactory } from "./modules/dataSets/dataSetsFactory";
@@ -17,12 +24,24 @@ export const PlugionLoader = () => {
     const isAnyBase = (obj: any) =>
         isModelBase(obj) || isClassifierBase(obj) || isDataSetsBase(obj) || isPreProcessorBase(obj);
 
-    const addToFactories = (obj: any) => {
+    const addToFactories = (obj: ISupportsName): KeyValuePair => {
         if (!isAnyBase(obj)) throw new Error("Type does not implement any plugin types");
-        if (isModelBase(obj)) return ModelsFactory.add(obj);
-        if (isClassifierBase(obj)) return ClassifiersFactory.add(obj);
-        if (isDataSetsBase(obj)) return DataSetsFactory.add(obj);
-        if (isPreProcessorBase(obj)) return PreProcessorsFactory.add(obj);
+        if (isModelBase(obj)) {
+            ModelsFactory.add(obj);
+            return { key: "model", value: obj.name };
+        }
+        if (isClassifierBase(obj)) {
+            ClassifiersFactory.add(obj);
+            return { key: "classifier", value: obj.name };
+        }
+        if (isDataSetsBase(obj)) {
+            DataSetsFactory.add(obj);
+            return { key: "dataSet", value: obj.name };
+        }
+        if (isPreProcessorBase(obj)) {
+            PreProcessorsFactory.add(obj);
+            return { key: "preProcessor", value: obj.name };
+        }
         throw new Error("Type does not implement any plugin types");
     };
 
@@ -37,11 +56,18 @@ export const PlugionLoader = () => {
                 .map(([_, v]) => (v as Function)())
                 .filter((f) => isAnyBase(f))
                 .map((f) => addToFactories(f));
-
-            console.log("plugins", plugins);
-        }
-        catch (err) {
-            console.log(`Error loading plugin ${packageName}.  Error: ${err}`)
+            console.log(
+                plugins.reduce(
+                    (a, c, i) =>
+                        a +
+                        `Added plugin type ${c.key}, plugin name ${c.value}${
+                            i !== plugins.length - 1 ? "\n" : ""
+                        }`,
+                    ""
+                )
+            );
+        } catch (err) {
+            console.log(`Error loading plugin ${packageName}.  Error: ${err}`);
         }
     };
     const load = async () => {

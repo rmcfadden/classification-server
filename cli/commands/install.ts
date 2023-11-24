@@ -12,11 +12,11 @@ const run = async (cmd: string) => {
     await new Promise((resolve) => child.on("close", resolve));
 };
 
-const install = async (args: string[]) => {
+const install = async (_: string[]) => {
     const { plugins } = await import("../publicPlugins.json");
     console.log("plugins", plugins);
     const packageUrls = plugins.map(({ url }) => url).join(" ");
-    const command = `node ./node_modules/yarn-add-no-save/bin/global.js ${packageUrls}`;
+    const command = `node ./node_modules/yarn-add-no-save/bin/local.js ${packageUrls}`;
     console.log(`Running install commmand: ${command}`);
     await run(command);
 };
