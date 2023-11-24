@@ -1,4 +1,4 @@
 export interface PreProcessorResponse {
     text: string;
-    newVariables: Map<string, string>;
+    newVariables?: Map<string, string>;
 }
