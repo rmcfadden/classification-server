@@ -1,4 +1,5 @@
 export interface ClassifyQuery {
-    type: string;
+    type?: string;
+    scheme?: string;
     text: string;
 }
