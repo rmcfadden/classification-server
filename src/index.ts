@@ -57,6 +57,7 @@ app.post("/datasets", addDataSet);
 
 const classify = AsyncErrorHandler(async (req: Request, res: Response) => {
     const query = req.body as ClassifyQuery;
+    if (!query.type) throw new Error("type cannot be empty");
     const classifier = ClassifiersFactory().create(query.type);
     const response = await classifier.classify(query);
     res.send(response);
