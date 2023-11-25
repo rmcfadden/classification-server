@@ -1,19 +1,19 @@
 import { DataSet } from "../../types/dataSet";
-import { ImageFeature } from "../../types/imageFeature";
+import { ImageLabel } from "../../types/imageLabel";
 import { ModelBase } from "../../types/modelBase";
 import { PredictionResult } from "../../types/predictionResult";
 
-export const ImagesModel = (imageFeatures: ImageFeature[]) => {
+export const ImagesModel = (imageLabels: ImageLabel[]) => {
     const predict = async (input: string): Promise<PredictionResult> => {
-        const matchedImageFeatures = imageFeatures.filter(({ image }) => image === input);
-        const { length: matchedCount } = matchedImageFeatures;
+        const matchedImageLabels = imageLabels.filter(({ image }) => image === input);
+        const { length: matchedCount } = matchedImageLabels;
         return {
-            predictions: matchedImageFeatures.map(({ feature }) => ({
-                feature,
+            predictions: matchedImageLabels.map(({ label }) => ({
+                label,
                 probability: 100 / matchedCount,
             })),
         };
     };
-    const train = async (dataSet: DataSet) => ImagesModel(dataSet.items as ImageFeature[]);
+    const train = async (dataSet: DataSet) => ImagesModel(dataSet.items as ImageLabel[]);
     return { predict, train, name: "image" } as ModelBase;
 };

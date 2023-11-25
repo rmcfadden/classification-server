@@ -1,10 +1,10 @@
 import { ClassifierBase } from "../../types/classifierBase";
-import { DataPointFeatureClassifier } from "./dataPointFeatureClassifier";
+import { DataPointLabelClassifier } from "./dataPointLabelClassifier";
 import { DataPointClassifier } from "./dataPointClassifier";
 import { ImageClassifier } from "./imageClassifier";
 import { TextClassifier } from "./textClassifier";
 import { NumericalClassifier } from "./numericalClassifier";
-import { NDDataPointFeatureClassifier } from "./nDDataPointFeatureClassifier";
+import { NDDataPointLabelClassifier } from "./nDDataPointLabelClassifier";
 
 export const ClassifiersFactory = () => {
     const { lookup } = ClassifiersFactory;
@@ -19,8 +19,8 @@ export const ClassifiersFactory = () => {
 
 ClassifiersFactory.lookup = new Map<string, ClassifierBase>([
     ["text", TextClassifier()],
-    ["dataPointFeature", DataPointFeatureClassifier()],
-    ["nDDataPointFeature", NDDataPointFeatureClassifier()],
+    ["dataPointLabel", DataPointLabelClassifier()],
+    ["nDDataPointLabel", NDDataPointLabelClassifier()],
     ["dataPoint", DataPointClassifier()],
     ["numerical", NumericalClassifier()],
     ["image", ImageClassifier()],

@@ -1,9 +1,9 @@
 import { ModelBase } from "../../types/modelBase";
 import { TextModel } from "./textModel";
-import { DataPointFeaturesModel } from "./dataPointFeaturesModel";
+import { DataPointLabelsModel } from "./dataPointLabelsModel";
 import { ImagesModel } from "./imagesModel";
 import { DataPointsModel } from "./dataPointsModel";
-import { NDDataPointFeaturesModel } from "./nDDataPointFeaturesModel";
+import { NDDataPointLabelsModel } from "./nDDataPointLabelsModel";
 
 export const ModelsFactory = () => {
     const { lookup } = ModelsFactory;
@@ -18,9 +18,9 @@ export const ModelsFactory = () => {
 
 ModelsFactory.lookup = new Map<string, ModelBase>([
     ["text", TextModel([])],
-    ["dataPointFeature", DataPointFeaturesModel([])],
+    ["dataPointLabel", DataPointLabelsModel([])],
     ["dataPoint", DataPointsModel([])],
-    ["nDDataPointFeature", NDDataPointFeaturesModel([])],
+    ["nDDataPointLabel", NDDataPointLabelsModel([])],
     ["image", ImagesModel([])],
 ]);
 

@@ -2,15 +2,15 @@ import app, { server } from "../src/index";
 import request from "supertest";
 import dotenv from "dotenv";
 import { DataPoint } from "../src/types/dataPoint";
-import { TextFeature } from "../src/types/textFeature";
-import { DataPointFeature } from "../src/types/dataPointFeature";
+import { TextLabel } from "../src/types/textLabel";
+import { DataPointLabel } from "../src/types/dataPointLabel";
 
 import { DataSet } from "../src/types/dataSet";
 import { ClassifyDataSetQuery } from "../src/types/classifyDataSetQuery";
-import { FeaturePredictionResult } from "../src/types/featurePredictionResult";
-import { ImageFeature } from "../src/types/imageFeature";
+import { LabelPredictionResult } from "../src/types/labelPredictionResult";
+import { ImageLabel } from "../src/types/imageLabel";
 import { NumericalPredictionResult } from "../src/types/numericalPredictionResult";
-import { NDDataPointFeature } from "../src/types/nDDataPointFeature";
+import { NDDataPointLabel } from "../src/types/nDDataPointLabel";
 
 dotenv.config();
 
@@ -52,22 +52,22 @@ test("datasets", async () => {
     expect(JSON.stringify(body)).toBe(JSON.stringify(pointsDataSet));
 });
 
-test("classify dataPoint features", async () => {
+test("classify dataPoint labels", async () => {
     const dataSetName = "testDataPoints";
-    const dataPointFeatures: DataPointFeature[] = [
-        { x: 0, y: 0, feature: "fruit" },
-        { x: 1, y: 1, feature: "fruit" },
-        { x: 3, y: 3, feature: "vegetable" },
-        { x: 4, y: 4, feature: "vegetable" },
-        { x: -2, y: -2, feature: "grain" },
+    const dataPointLabels: DataPointLabel[] = [
+        { x: 0, y: 0, label: "fruit" },
+        { x: 1, y: 1, label: "fruit" },
+        { x: 3, y: 3, label: "vegetable" },
+        { x: 4, y: 4, label: "vegetable" },
+        { x: -2, y: -2, label: "grain" },
     ];
     const foodDataSet: DataSet = {
         name: dataSetName,
-        dataTypes: "dataPointFeature",
-        items: dataPointFeatures,
+        dataTypes: "dataPointLabel",
+        items: dataPointLabels,
     };
     const classifyQuery: ClassifyDataSetQuery = {
-        type: "dataPointFeature",
+        type: "dataPointLabel",
         dataSet: foodDataSet,
         text: ".75,.80",
     };
@@ -77,21 +77,21 @@ test("classify dataPoint features", async () => {
         .send(JSON.stringify(classifyQuery))
         .set("Content-type", "application/json");
     expect(status).toBe(200);
-    const { predictions }: FeaturePredictionResult = body;
-    const [{ feature, probability }] = predictions;
-    expect(feature).toBe("fruit");
+    const { predictions }: LabelPredictionResult = body;
+    const [{ label, probability }] = predictions;
+    expect(label).toBe("fruit");
     expect(probability).toBe(100);
     expect(status).toBe(200);
 });
 
 test("classify nDDataPoints", async () => {
     const dataSetName = "testDataPoints";
-    const dataPoints: NDDataPointFeature[] = [
-        { values: [0, 0], feature: "fruit" },
-        { values: [1, 1], feature: "fruit" },
-        { values: [3, 3], feature: "vegetable" },
-        { values: [4, 4], feature: "vegetable" },
-        { values: [-2, -2], feature: "grain" },
+    const dataPoints: NDDataPointLabel[] = [
+        { values: [0, 0], label: "fruit" },
+        { values: [1, 1], label: "fruit" },
+        { values: [3, 3], label: "vegetable" },
+        { values: [4, 4], label: "vegetable" },
+        { values: [-2, -2], label: "grain" },
     ];
     const pointsDataSet: DataSet = {
         name: dataSetName,
@@ -99,7 +99,7 @@ test("classify nDDataPoints", async () => {
         items: dataPoints,
     };
     const classifyQuery: ClassifyDataSetQuery = {
-        type: "nDDataPointFeature",
+        type: "nDDataPointLabel",
         dataSet: pointsDataSet,
         text: ".75,.80",
     };
@@ -109,9 +109,9 @@ test("classify nDDataPoints", async () => {
         .send(JSON.stringify(classifyQuery))
         .set("Content-type", "application/json");
 
-    const { predictions }: FeaturePredictionResult = body;
-    const [{ feature, probability }] = predictions;
-    expect(feature).toBe("fruit");
+    const { predictions }: LabelPredictionResult = body;
+    const [{ label, probability }] = predictions;
+    expect(label).toBe("fruit");
     expect(probability).toBe(100);
     expect(status).toBe(200);
 });
@@ -147,17 +147,17 @@ test("classify dataPoints", async () => {
 
 test("classify text", async () => {
     const dataSetName = "testText";
-    const textFeatures: TextFeature[] = [
-        { text: "apple", feature: "fruit" },
-        { text: "orange", feature: "fruit" },
-        { text: "tamato", feature: "vegetable" },
-        { text: "lettuce", feature: "vegetable" },
-        { text: "oat", feature: "grain" },
+    const textLabels: TextLabel[] = [
+        { text: "apple", label: "fruit" },
+        { text: "orange", label: "fruit" },
+        { text: "tamato", label: "vegetable" },
+        { text: "lettuce", label: "vegetable" },
+        { text: "oat", label: "grain" },
     ];
     const foodDataSet: DataSet = {
         name: dataSetName,
-        dataTypes: "textFeature",
-        items: textFeatures,
+        dataTypes: "textLabel",
+        items: textLabels,
     };
     const classifyQuery: ClassifyDataSetQuery = {
         type: "text",
@@ -171,24 +171,24 @@ test("classify text", async () => {
         .set("Content-type", "application/json");
 
     expect(status).toBe(200);
-    const { predictions }: FeaturePredictionResult = body;
-    const [{ feature, probability }] = predictions;
-    expect(feature).toBe("vegetable");
+    const { predictions }: LabelPredictionResult = body;
+    const [{ label, probability }] = predictions;
+    expect(label).toBe("vegetable");
     expect(probability).toBe(100);
     expect(status).toBe(200);
 });
 
 test("classify image", async () => {
     const dataSetName = "testText";
-    const textFeatures: ImageFeature[] = [
-        { image: "=!@#!#$%AABADF", feature: "fruit" },
-        { image: "ASDFAS123BADA@$46", feature: "fruit" },
-        { image: "123#$2342341aba412", feature: "vegetable" },
+    const textLabels: ImageLabel[] = [
+        { image: "=!@#!#$%AABADF", label: "fruit" },
+        { image: "ASDFAS123BADA@$46", label: "fruit" },
+        { image: "123#$2342341aba412", label: "vegetable" },
     ];
     const foodDataSet: DataSet = {
         name: dataSetName,
-        dataTypes: "imageFeature",
-        items: textFeatures,
+        dataTypes: "imageLabel",
+        items: textLabels,
     };
     const classifyQuery: ClassifyDataSetQuery = {
         type: "image",
@@ -201,9 +201,9 @@ test("classify image", async () => {
         .send(JSON.stringify(classifyQuery))
         .set("Content-type", "application/json");
     expect(status).toBe(200);
-    const { predictions }: FeaturePredictionResult = body;
-    const [{ feature, probability }] = predictions;
-    expect(feature).toBe("vegetable");
+    const { predictions }: LabelPredictionResult = body;
+    const [{ label, probability }] = predictions;
+    expect(label).toBe("vegetable");
     expect(probability).toBe(100);
     expect(status).toBe(200);
 });

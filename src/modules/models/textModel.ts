@@ -1,19 +1,19 @@
 import { DataSet } from "../../types/dataSet";
-import { TextFeature } from "../../types/textFeature";
+import { TextLabel } from "../../types/textLabel";
 import { ModelBase } from "../../types/modelBase";
 import { PredictionResult } from "../../types/predictionResult";
 
-export const TextModel = (textFeatures: TextFeature[]) => {
+export const TextModel = (textLabels: TextLabel[]) => {
     const predict = async (input: string): Promise<PredictionResult> => {
-        const matchedTextFeatures = textFeatures.filter(({ text }) => text === input);
-        const { length: matchedCount } = matchedTextFeatures;
+        const matchedTextLabels = textLabels.filter(({ text }) => text === input);
+        const { length: matchedCount } = matchedTextLabels;
         return {
-            predictions: matchedTextFeatures.map(({ feature }) => ({
-                feature,
+            predictions: matchedTextLabels.map(({ label }) => ({
+                label,
                 probability: 100 / matchedCount,
             })),
         };
     };
-    const train = async (dataSet: DataSet) => TextModel(dataSet.items as TextFeature[]);
+    const train = async (dataSet: DataSet) => TextModel(dataSet.items as TextLabel[]);
     return { predict, train, name: "text" } as ModelBase;
 };
