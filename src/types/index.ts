@@ -10,6 +10,8 @@ export type { LabelClassifyResponse } from "./labelClassifyResponse";
 export type { LabelPrediction } from "./labelPrediction";
 export type { LabelPredictionResult } from "./labelPredictionResult";
 export type { ImageLabel } from "./imageLabel";
+export type { ISupportsName } from "./iSupportsName"
+export type { KeyValuePair } from "./keyValuePair"
 export type { ModelBase } from "./modelBase";
 export type { NDDataPoint } from "./nDDataPoint";
 export type { NDDataPointLabel } from "./nDDataPointLabel";
@@ -17,9 +19,10 @@ export type { NumberData } from "./numberData";
 export type { NumericalClassifyResponse } from "./numericalClassifyResponse";
 export type { NumericalPredictionResult } from "./numericalPredictionResult";
 export type { PredictionResult } from "./predictionResult";
-export type { TextLabel } from "./textLabel";
-export type { ThreeDDataPoint } from "./threeDDataPoint";
 export type { PluginMeta } from "./pluginMeta";
 export type { PluginsMeta } from "./pluginsMeta";
 export type { PreProcessorBase } from "./preProcessorBase";
-export type { ISupportsName } from "./iSupportsName";
+export type { PreProcessorResponse } from "./preProcessorResponse";
+export type { PreProcessorRequest } from "./preProcessorRequest";
+export type { TextLabel } from "./textLabel";
+export type { ThreeDDataPoint } from "./threeDDataPoint";

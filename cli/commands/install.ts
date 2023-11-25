@@ -12,14 +12,12 @@ const run = async (cmd: string) => {
     await new Promise((resolve) => child.on("close", resolve));
 };
 
-const install = async (args: string[]) => {
-    const publicPlugins = await import("../publicPlugins.json");
-
-    console.log("publicPlugins", publicPlugins);
-    const command =
-        "yarn add --registry https://registry.yarnpkg.com/ https://github.com/rmcfadden/classification-server-kd-tree";
+const install = async (_: string[]) => {
+    const { plugins } = await import("../publicPlugins.json");
+    console.log("plugins", plugins);
+    const packageUrls = plugins.map(({ url }) => url).join(" ");
+    const command = `node ./node_modules/yarn-add-no-save/bin/local.js ${packageUrls}`;
     console.log(`Running install commmand: ${command}`);
-
     await run(command);
 };
 

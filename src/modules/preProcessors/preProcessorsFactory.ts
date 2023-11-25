@@ -1,5 +1,7 @@
 import { PreProcessorBase } from "../../types/preProcessorBase";
 import { TextNoisePreProcessor } from "./textNoisePreProcessor";
+import { ToLowerCasePreProcessor } from "./toLowerCasePreProcessor";
+import { ToUpperCasePreProcessor } from "./toUpperCasePreProcessor";
 
 export const PreProcessorsFactory = () => {
     const { lookup } = PreProcessorsFactory;
@@ -13,6 +15,8 @@ export const PreProcessorsFactory = () => {
 };
 PreProcessorsFactory.lookup = new Map<string, PreProcessorBase>([
     ["textNoise", TextNoisePreProcessor()],
+    ["toLowerCase", ToLowerCasePreProcessor()],
+    ["toUpperCase", ToUpperCasePreProcessor()],
 ]);
 PreProcessorsFactory.add = (model: PreProcessorBase) =>
     (PreProcessorsFactory.lookup = PreProcessorsFactory.lookup.set(model.name, model));

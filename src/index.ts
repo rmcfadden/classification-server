@@ -57,6 +57,7 @@ app.post("/datasets", addDataSet);
 
 const classify = AsyncErrorHandler(async (req: Request, res: Response) => {
     const query = req.body as ClassifyQuery;
+    if (!query.type) throw new Error("type cannot be empty");
     const classifier = ClassifiersFactory().create(query.type);
     const response = await classifier.classify(query);
     res.send(response);
@@ -73,6 +74,10 @@ const server = app.listen(port, async () => {
     console.log(`⚡️⚡️${productName} is running at http://localhost:${port}`);
     const { load } = PlugionLoader();
     await load();
+    const shouldLoadPlugins = app.get("loadPlugins") !== "false";
+    shouldLoadPlugins && (await load());
+    !shouldLoadPlugins &&
+        console.log("Ignoring loading plugins because loadingPlugins is set to false");
 });
 
 app.use((err: Error, _: Request, res: Response, _n: NextFunction) => {
