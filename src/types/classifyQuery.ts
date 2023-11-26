@@ -1,5 +1,8 @@
 export interface ClassifyQuery {
+    text: string;
     type?: string;
     scheme?: string;
-    text: string;
+    shouldIncludExplain?: boolean;
+    options?: Map<string, string>;
+    preProcessSteps?: string[];
 }
