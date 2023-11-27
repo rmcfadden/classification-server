@@ -10,6 +10,8 @@ import { ClassifiersFactory } from "./modules/classifiers/classifiersFactory";
 import { AsyncErrorHandler } from "./core/asyncErrorHandler";
 import { getModules } from "./modules/index";
 import { PlugionLoader } from "./pluginLoader";
+import { PreProcessorRunner } from "./modules/preProcessors/preProcessorRunner";
+import { PreProcessorRunnerRequest } from "./types/preProcessorRunnerRequest";
 
 dotenv.config();
 
@@ -57,9 +59,21 @@ app.post("/datasets", addDataSet);
 
 const classify = AsyncErrorHandler(async (req: Request, res: Response) => {
     const query = req.body as ClassifyQuery;
-    if (!query.type) throw new Error("type cannot be empty");
-    const classifier = ClassifiersFactory().create(query.type);
-    const response = await classifier.classify(query);
+    const { type, preProcessSteps = [] } = query;
+    if (!type) throw new Error("type cannot be empty");
+    const { run } = PreProcessorRunner();
+    const preProcessorRunnerResponse =
+        preProcessSteps.length > 0
+            ? await run({
+                  text: query.text,
+                  steps: preProcessSteps,
+              } as PreProcessorRunnerRequest)
+            : undefined;
+    const finalQuery = preProcessorRunnerResponse
+        ? { ...query, text: preProcessorRunnerResponse.text }
+        : query;
+    const classifier = ClassifiersFactory().create(type);
+    const response = await classifier.classify(finalQuery);
     res.send(response);
 });
 app.post("/classify", classify);

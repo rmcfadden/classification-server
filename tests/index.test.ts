@@ -179,6 +179,40 @@ test("classify text", async () => {
     expect(status).toBe(200);
 });
 
+test("classify text with preProcessors", async () => {
+    const dataSetName = "testText";
+    const textLabels: TextLabel[] = [
+        { text: "apple", label: "fruit" },
+        { text: "orange", label: "fruit" },
+        { text: "tamato", label: "vegetable" },
+        { text: "lettuce", label: "vegetable" },
+        { text: "oat", label: "grain" },
+    ];
+    const foodDataSet: DataSet = {
+        name: dataSetName,
+        dataTypes: "textLabel",
+        items: textLabels,
+    };
+    const classifyQuery: ClassifyDataSetQuery = {
+        type: "text",
+        dataSet: foodDataSet,
+        text: "O!!a.t",
+        preProcessSteps: ["toLowerCase", "textNoise"],
+    };
+    const { status, body } = await request(app)
+        .post(`/classify`)
+        .set("Authorization", token)
+        .send(JSON.stringify(classifyQuery))
+        .set("Content-type", "application/json");
+
+    expect(status).toBe(200);
+    const { predictions }: LabelPredictionResult = body;
+    const [{ label, probability }] = predictions;
+    expect(label).toBe("grain");
+    expect(probability).toBe(100);
+    expect(status).toBe(200);
+});
+
 test("classify image", async () => {
     const dataSetName = "testText";
     const textLabels: ImageLabel[] = [
