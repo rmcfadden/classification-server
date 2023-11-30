@@ -1,16 +1,19 @@
 import app, { server } from "../src/index";
 import request from "supertest";
 import dotenv from "dotenv";
-import { DataPoint } from "../src/types/dataPoint";
-import { TextLabel } from "../src/types/textLabel";
-import { DataPointLabel } from "../src/types/dataPointLabel";
-
-import { DataSet } from "../src/types/dataSet";
-import { ClassifyDataSetQuery } from "../src/types/classifyDataSetQuery";
-import { LabelPredictionResult } from "../src/types/labelPredictionResult";
-import { ImageLabel } from "../src/types/imageLabel";
-import { NumericalPredictionResult } from "../src/types/numericalPredictionResult";
-import { NDDataPointLabel } from "../src/types/nDDataPointLabel";
+import {
+    DataPoint,
+    TextLabel,
+    DataPointLabel,
+    DataSet,
+    ClassifyDataSetQuery,
+    LabelPredictionResult,
+    ImageLabel,
+    NumericalPredictionResult,
+    NDDataPointLabel,
+    LabelClassifyResponse,
+    BeforeAfterExplainStep,
+} from "../src/types/";
 
 dotenv.config();
 app.set("loadPlugins", "false");
@@ -78,7 +81,7 @@ test("classify dataPoint labels", async () => {
         .send(JSON.stringify(classifyQuery))
         .set("Content-type", "application/json");
     expect(status).toBe(200);
-    const { predictions }: LabelPredictionResult = body;
+    const { predictions }: LabelClassifyResponse = body;
     const [{ label, probability }] = predictions;
     expect(label).toBe("fruit");
     expect(probability).toBe(100);
@@ -110,11 +113,11 @@ test("classify nDDataPoints", async () => {
         .send(JSON.stringify(classifyQuery))
         .set("Content-type", "application/json");
 
-    const { predictions }: LabelPredictionResult = body;
+    expect(status).toBe(200);
+    const { predictions }: LabelClassifyResponse = body;
     const [{ label, probability }] = predictions;
     expect(label).toBe("fruit");
     expect(probability).toBe(100);
-    expect(status).toBe(200);
 });
 
 test("classify dataPoints", async () => {
@@ -172,7 +175,7 @@ test("classify text", async () => {
         .set("Content-type", "application/json");
 
     expect(status).toBe(200);
-    const { predictions }: LabelPredictionResult = body;
+    const { predictions }: LabelClassifyResponse = body;
     const [{ label, probability }] = predictions;
     expect(label).toBe("vegetable");
     expect(probability).toBe(100);
@@ -204,9 +207,17 @@ test("classify text with preProcessors", async () => {
         .set("Authorization", token)
         .send(JSON.stringify(classifyQuery))
         .set("Content-type", "application/json");
-
     expect(status).toBe(200);
-    const { predictions }: LabelPredictionResult = body;
+    const {
+        predictions,
+        explainResult: { steps },
+    }: LabelClassifyResponse = body;
+    const [step1, step2] = steps as BeforeAfterExplainStep[];
+    expect(step1.before).toBe("O!!a.t");
+    expect(step1.after).toBe("o!!a.t");
+    expect(step2.before).toBe("o!!a.t");
+    expect(step2.after).toBe("oat");
+
     const [{ label, probability }] = predictions;
     expect(label).toBe("grain");
     expect(probability).toBe(100);
@@ -236,7 +247,7 @@ test("classify image", async () => {
         .send(JSON.stringify(classifyQuery))
         .set("Content-type", "application/json");
     expect(status).toBe(200);
-    const { predictions }: LabelPredictionResult = body;
+    const { predictions }: LabelClassifyResponse = body;
     const [{ label, probability }] = predictions;
     expect(label).toBe("vegetable");
     expect(probability).toBe(100);

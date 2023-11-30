@@ -4,14 +4,18 @@ import dotenv from "dotenv";
 import { AuthenticationFactory } from "./modules/authentication/authenticationFactory";
 import { AuthenticationBase } from "./modules/authentication/authenticationBase";
 import { DataSetsFactory } from "./modules/dataSets/dataSetsFactory";
-import { DataSet } from "./types/dataSet";
-import { ClassifyQuery } from "./types/classifyQuery";
 import { ClassifiersFactory } from "./modules/classifiers/classifiersFactory";
 import { AsyncErrorHandler } from "./core/asyncErrorHandler";
 import { getModules } from "./modules/index";
 import { PlugionLoader } from "./pluginLoader";
 import { PreProcessorRunner } from "./modules/preProcessors/preProcessorRunner";
-import { PreProcessorRunnerRequest } from "./types/preProcessorRunnerRequest";
+import {
+    ClassifyResponse,
+    ClassifyQuery,
+    ExplainResult,
+    DataSet,
+    PreProcessorRunnerRequest,
+} from "./types";
 
 dotenv.config();
 
@@ -74,7 +78,19 @@ const classify = AsyncErrorHandler(async (req: Request, res: Response) => {
         : query;
     const classifier = ClassifiersFactory().create(type);
     const response = await classifier.classify(finalQuery);
-    res.send(response);
+    const { explainResult = {} as ExplainResult } = response;
+    const finalResponse = {
+        ...response,
+        explainResult: {
+            ...explainResult,
+            steps: [
+                ...(preProcessorRunnerResponse ? preProcessorRunnerResponse.explainSteps : []),
+                ...(explainResult.steps ?? []),
+            ],
+        },
+    } as ClassifyResponse;
+
+    res.send(finalResponse);
 });
 app.post("/classify", classify);
 

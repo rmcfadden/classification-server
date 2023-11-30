@@ -1,5 +1,5 @@
 export interface ExplainStep {
     name: string;
-    start: bigint;
-    elapsed: bigint;
+    start: number;
+    elapsed: number;
 }
